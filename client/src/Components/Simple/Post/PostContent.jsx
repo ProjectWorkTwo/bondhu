@@ -19,13 +19,13 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
         vitae aspernatur. Voluptatem dolor ullam neque reiciendis saepe ex
         asperiores atque deleniti corporis, beatae, aspernatur eligendi.
       </p>
-      <div className="relative w-full max-h-[500px] bg-secondaryColor overflow-hidden rounded-md group">
+      <div className="relative w-full max-h-[400px] bg-secondaryColor overflow-hidden rounded-md group">
         <img src={postImg} alt="" className="w-auto h-auto" />
-        <div className="absolute z-[1] top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 translate-y-20 group-hover:translate-y-0 grid place-items-center bg-whiteColor/50 text-4xl commonAnim">
-          <span
-            className="w-14 h-14 rounded-full grid place-items-center bg-primaryColor text-whiteColor cursor-pointer"
-            onClick={() => setPostImgDetailsStatus((prev) => true)}
-          >
+        <div
+          className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 translate-y-20 group-hover:translate-y-0 grid place-items-center bg-whiteColor/50 text-4xl cursor-pointer commonAnim"
+          onClick={() => setPostImgDetailsStatus((prev) => true)}
+        >
+          <span className="w-14 h-14 rounded-full grid place-items-center bg-primaryColor text-whiteColor">
             <HiMiniViewfinderCircle />
           </span>
         </div>

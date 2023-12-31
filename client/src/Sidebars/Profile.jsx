@@ -2,16 +2,14 @@ import React, { useEffect, useRef } from "react";
 import ScrollBar from "../Components/Simple/ScrollBar";
 import ProfileTop from "../Components/Simple/Profile/ProfileTop";
 import ProfileContent from "../Components/Simple/Profile/ProfileContent";
+import hidePopUp from "../Components/CustomFunction/hidePopUp";
 
-const Profile = ({ profileState, setProfileState, author }) => {
-  const wrapperRef = useRef(null);
+const Profile = ({
+  profileState,
+  setProfileState,
+  author,
+}) => {
   const boxRef = useRef(null);
-  useEffect(() => {
-    wrapperRef?.current?.addEventListener("click", (e) => {
-      if (!boxRef?.current?.contains(e.target))
-        setProfileState((prev) => false);
-    });
-  }, []);
   const activeStyle = author === "own" ? `translate-x-0` : `translate-x-0`;
   const diactiveStyle =
     author === "own" ? `-translate-x-full` : `translate-x-full`;
@@ -20,7 +18,7 @@ const Profile = ({ profileState, setProfileState, author }) => {
       className={`fixed top-0 left-0 ${
         profileState ? activeStyle : diactiveStyle
       } w-full h-screen commonAnim`}
-      ref={wrapperRef}
+      onClick={(e) => hidePopUp(e, boxRef, setProfileState)}
     >
       <div
         className={`absolute ${

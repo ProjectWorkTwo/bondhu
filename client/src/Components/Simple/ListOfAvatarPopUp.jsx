@@ -1,15 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Avatar1 from "./Avatar1";
-import { hidePopUp } from "../../Constant/Constant";
+import hidePopUp from "../CustomFunction/hidePopUp";
 
 const ListOfAvatarPopUp = ({ title, setStatus }) => {
   const boxRef = useRef(null);
-  const wrapperRef = useRef(null);
-  useEffect(() => {
-    hidePopUp(wrapperRef, boxRef, setStatus);
-  }, []);
   return (
-    <section className="popupWrapper" ref={wrapperRef}>
+    <section
+      className="popupWrapper"
+      onClick={(e) => hidePopUp(e, boxRef, setStatus, true)}
+    >
       <div
         className="flex flex-col gap-4 bg-whiteColor shadow-2xl rounded-md w-[95vw] max-w-[450px] h-[95vh] max-h-[500px] p-5"
         ref={boxRef}

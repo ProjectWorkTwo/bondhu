@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import ScrollBar from "./ScrollBar";
-import hidePopUp from "../CustomFunction/hidePopUp";
+import React, { useRef, useState } from "react";
+import ScrollBar from "../ScrollBar";
+import hidePopUp from "../../CustomFunction/hidePopUp";
 
-const CreatePostPopUp = ({ setStatus }) => {
+const UpdatePostPopUp = ({ setStatus }) => {
   const [postData, setPostData] = useState({
     heading: "",
     postImg: "",
@@ -29,7 +29,7 @@ const CreatePostPopUp = ({ setStatus }) => {
         className="flex flex-col gap-4 bg-whiteColor shadow-2xl rounded-md w-[95vw] max-w-[450px] h-auto max-h-[95vh] p-5"
         ref={boxRef}
       >
-        <h2 className="text-center">Create Post</h2>
+        <h2 className="text-center">Update Post</h2>
         <form
           className="w-full flex flex-col gap-4 overflow-hidden"
           onSubmit={handleSubmit}
@@ -122,7 +122,7 @@ const CreatePostPopUp = ({ setStatus }) => {
             </div>
           </ScrollBar>
           <button type="submit" className="btnFill1">
-            Create Post
+            Update Post
           </button>
         </form>
       </div>
@@ -130,4 +130,4 @@ const CreatePostPopUp = ({ setStatus }) => {
   );
 };
 
-export default CreatePostPopUp;
+export default UpdatePostPopUp;

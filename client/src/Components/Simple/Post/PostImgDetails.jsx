@@ -1,17 +1,16 @@
-import React, { useEffect, useRef } from "react";
-import { hidePopUp } from "../../../Constant/Constant";
+import React, { useRef } from "react";
+import hidePopUp from "../../CustomFunction/hidePopUp";
 
 const postImg =
   "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbnxlbnwwfHwwfHx8MA%3D%3D";
 
 const PostImgDetails = ({ setStatus }) => {
-  const wrapperRef = useRef(null);
   const boxRef = useRef(null);
-  useEffect(() => {
-    hidePopUp(wrapperRef, boxRef, setStatus);
-  }, []);
   return (
-    <section className="popupWrapper" ref={wrapperRef}>
+    <section
+      className="popupWrapper"
+      onClick={(e) => hidePopUp(e, boxRef, setStatus, true)}
+    >
       <img
         src={postImg}
         alt=""

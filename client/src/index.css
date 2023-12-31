@@ -20,6 +20,9 @@
   .input1 {
     @apply w-full px-3 py-2 text-sm md:text-base text-secondaryColor border-b-2 border-primaryColor outline-none;
   }
+  .searchInpStyle {
+    @apply p-1 border-2 border-primaryColor flex justify-between items-center text-secondaryColor;
+  }
   .threeDotPopupButton {
     @apply p-1 text-base md:text-lg text-primaryColor capitalize cursor-pointer hover:bg-grayColor/10 rounded-md;
   }
