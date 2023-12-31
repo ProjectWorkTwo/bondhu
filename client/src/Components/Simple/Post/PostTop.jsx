@@ -9,11 +9,13 @@ const userImg =
 const PostTop = ({ setUpdateStatus }) => {
   const threeDotRef = useRef(null);
   useEffect(() => {
-    document.addEventListener("click", (e) => {
+    const handleClickEvent = (e) => {
       e.stopPropagation();
       if (!threeDotRef?.current?.contains(e.target))
         setThreeDotPopUpState((prev) => false);
-    });
+    };
+    document.addEventListener("click", handleClickEvent);
+    return () => document.removeEventListener("click", handleClickEvent);
   }, []);
 
   const [threeDotPopUpState, setThreeDotPopUpState] = useState(false);
@@ -22,7 +24,7 @@ const PostTop = ({ setUpdateStatus }) => {
       <div className="flex gap-2">
         <Link
           to="/"
-          className="cursor-pointer size-20 rounded-full border-2 border-primaryColor overflow-hidden"
+          className="cursor-pointer size-16 rounded-full border-2 border-primaryColor overflow-hidden"
         >
           <img src={userImg} alt="" className="w-full h-full object-cover" />
         </Link>
@@ -50,7 +52,10 @@ const PostTop = ({ setUpdateStatus }) => {
         </span>
         {threeDotPopUpState && (
           <div className="absolute top-10 right-0">
-            <ThreeDotPopUp setUpdateStatus={setUpdateStatus} />
+            <ThreeDotPopUp
+              setUpdateStatus={setUpdateStatus}
+              setThreeDotPopUpState={setThreeDotPopUpState}
+            />
           </div>
         )}
       </div>

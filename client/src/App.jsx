@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "./Components/Simple/NavBar";
+import NavBar from "./Components/Simple/NavBar/NavBar";
 import { Outlet } from "react-router-dom";
 import OwnProfile from "./Sidebars/OwnProfile";
 import CustomScrollBar from "./Components/Simple/CustomScrollBar";
@@ -19,7 +19,7 @@ const App = () => {
         setSearchPopUpState={setSearchPopUpState}
         setOtherProfileState={setOtherProfileState}
       />
-      <section className="w-full flex justify-center items-center px-5">
+      <section className="w-full flex justify-center items-center px-5 mt-[80px]">
         <Outlet />
       </section>
       <OwnProfile
