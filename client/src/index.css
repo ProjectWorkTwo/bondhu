@@ -33,7 +33,7 @@
     @apply z-[99999];
   }
   .navTabIcon {
-    @apply size-9 sm:size-12 bg-whiteColor/20 scale-100 hover:bg-whiteColor/50 hover:scale-[0.8] grid place-items-center rounded-full text-whiteColor text-xl sm:text-2xl overflow-hidden cursor-pointer commonAnim;
+    @apply size-9 sm:size-12 bg-whiteColor/20 scale-100 hover:bg-whiteColor/50 hover:scale-[0.8] grid place-items-center rounded-full text-whiteColor text-xl sm:text-2xl overflow-hidden cursor-pointer border-2 border-transparent commonAnim;
   }
   .navMobileTab {
     @apply w-full p-2 bg-grayColor/5 hover:bg-grayColor/15 flex justify-start items-center gap-2 cursor-pointer commonAnim;
@@ -73,4 +73,10 @@
 }
 .mobileNavLinkCustomCSS a.active span {
   color: #ffffff !important;
+}
+
+.fullScreenNavLinks a.active{
+  background: rgba(255, 255, 255, 0.5) !important;
+  scale: 0.8;
+  border-color: #ffffff;
 }

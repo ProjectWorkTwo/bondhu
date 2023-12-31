@@ -19,12 +19,12 @@ const ProfileTopInfo = () => {
       </div>
       <div className="p-4 flex flex-col justify-center items-center gap-2">
         <h1 className="text-center capitalize">Full Name</h1>
-        <span className="btnFill1">userName</span>
+        <span className="btnFill1 w-auto">userName</span>
         <p className="text-center text-grayColor text-sm leading-normal">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus
           ipsum quis ligula vulputate, at auctor orci ullamcorper.
         </p>
-        <button className="btnFill1">Send Friend Request</button>
+        <button className="btnFill1 w-auto">Send Friend Request</button>
       </div>
     </div>
   );

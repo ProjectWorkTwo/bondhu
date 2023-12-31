@@ -3,11 +3,14 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import MainRoutes from "./Routers/MainRoutes.jsx";
+import ProfilePopUpProvider from "./Providers/ProfilePopUpProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <MainRoutes>
-      <App />
-    </MainRoutes>
+    <ProfilePopUpProvider>
+      <MainRoutes>
+        <App />
+      </MainRoutes>
+    </ProfilePopUpProvider>
   </React.StrictMode>
 );
