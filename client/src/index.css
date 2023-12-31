@@ -9,7 +9,7 @@
     @apply text-2xl md:text-3xl font-bold text-primaryColor;
   }
   h2 {
-    @apply text-primaryColor text-xl  md:text-2xl font-bold;
+    @apply text-primaryColor text-xl md:text-2xl font-bold;
   }
   img {
     @apply select-none;
@@ -60,7 +60,7 @@
     @apply transition-all duration-150 ease-in-out;
   }
   .popupWrapper {
-    @apply fixed top-0 left-0 z-[9999] w-full h-full bg-whiteColor/40 grid place-items-center;
+    @apply fixed top-0 left-0 z-[9999] w-full h-full bg-whiteColor/0 grid place-items-center;
   }
 }
 
@@ -75,7 +75,7 @@
   color: #ffffff !important;
 }
 
-.fullScreenNavLinks a.active{
+.fullScreenNavLinks a.active {
   background: rgba(255, 255, 255, 0.5) !important;
   scale: 0.8;
   border-color: #ffffff;
