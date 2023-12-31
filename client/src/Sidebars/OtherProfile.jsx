@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import Profile from "./Profile";
+import { ProfilePopUpContext } from "../Providers/ProfilePopUpProvider";
 
-const OtherProfile = ({ profileState, setProfileState, author }) => {
+const OtherProfile = () => {
+  const { otherProfileState, setOtherProfileState } =
+    useContext(ProfilePopUpContext);
   return (
     <Profile
-      profileState={profileState}
-      setProfileState={setProfileState}
-      author={author}
+      profileState={otherProfileState}
+      setProfileState={setOtherProfileState}
+      author="other"
     />
   );
 };

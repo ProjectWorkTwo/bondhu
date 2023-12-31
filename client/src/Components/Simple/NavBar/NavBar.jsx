@@ -70,21 +70,19 @@ const NavBar = ({
   const handleLogOut = () => {};
   return (
     <div className="fixed top-0 left-0 z-[99] w-full grid grid-cols-2 md:grid-cols-3 justify-center items-center  px-5 py-2 bg-primaryColor gap-2 min-h-[80px]">
-      {/* onClick={() => setOwnProfileState((prev) => true)}
-        onClick={() => setOtherProfileState((prev) => true)} */}
       <Link
         to="/"
         className="w-fit text-2xl emd:text-3xl font-black text-whiteColor select-none"
       >
         Bondhu
       </Link>
-      <div className="hidden md:flex justify-center items-center gap-4">
+      <div className="fullScreenNavLinks hidden md:flex justify-center items-center gap-4">
         {tabs.map(({ text, link, icon }, i) => (
           <React.Fragment key={i}>
             {link ? (
-              <Link to={link} className="navTabIcon">
+              <NavLink to={link} className="navTabIcon">
                 {icon}
-              </Link>
+              </NavLink>
             ) : (
               <div
                 className="navTabIcon"

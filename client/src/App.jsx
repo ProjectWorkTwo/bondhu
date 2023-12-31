@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NavBar from "./Components/Simple/NavBar/NavBar";
 import { Outlet } from "react-router-dom";
 import OwnProfile from "./Sidebars/OwnProfile";
@@ -6,10 +6,15 @@ import CustomScrollBar from "./Components/Simple/CustomScrollBar";
 import OtherProfile from "./Sidebars/OtherProfile";
 import UnAuthorizePopup from "./Components/Simple/UnAuthorizePopup";
 import SearchPopUp from "./Sidebars/SearchPopUp";
+import { ProfilePopUpContext } from "./Providers/ProfilePopUpProvider";
 
 const App = () => {
-  const [ownProfileState, setOwnProfileState] = useState(false);
-  const [otherProfileState, setOtherProfileState] = useState(false);
+  const {
+    ownProfileState,
+    setOwnProfileState,
+    otherProfileState,
+    setOtherProfileState,
+  } = useContext(ProfilePopUpContext);
   const [autorizePopUpState, setAutorizePopUpState] = useState(false);
   const [searchPopUpState, setSearchPopUpState] = useState(false);
   return (
@@ -22,15 +27,10 @@ const App = () => {
       <section className="w-full flex justify-center items-center px-5 mt-[80px]">
         <Outlet />
       </section>
-      <OwnProfile
-        profileState={ownProfileState}
-        setProfileState={setOwnProfileState}
-        author={"own"}
-      />
+      <OwnProfile/>
       <OtherProfile
         profileState={otherProfileState}
         setProfileState={setOtherProfileState}
-        author={"other"}
       />
       <SearchPopUp
         searchPopUpState={searchPopUpState}
