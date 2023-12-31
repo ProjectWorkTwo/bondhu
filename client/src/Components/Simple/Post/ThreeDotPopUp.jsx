@@ -4,7 +4,7 @@ import { MdEdit } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 
 const ThreeDotPopUp = ({ setUpdateStatus, setThreeDotPopUpState }) => {
-  const url = `http://localhost:5173/post/3`;
+  const url = `${location.origin}/post/3`;
   const handleCopyLink = () => navigator.clipboard.writeText(url);
   const handleDelete = () => {};
   return (
