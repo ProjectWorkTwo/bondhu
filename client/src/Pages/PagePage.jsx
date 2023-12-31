@@ -17,6 +17,7 @@ const PagePage = () => {
       >
         <FaGear />
       </span>
+      
     </section>
   );
 };
