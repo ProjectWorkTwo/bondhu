@@ -19,7 +19,7 @@ const Avatar1 = ({
     setOtherProfileState((prv) => true);
   };
   return (
-    <div className="w-full p-2 rounded-lg shadow-xl bg-whiteColor flex justify-start items-start gap-3">
+    <div className="w-full p-2 rounded-lg shadow-xl bg-whiteColor flex justify-start items-start gap-3 border">
       <div
         className="flex-grow-0 flex-shrink-0 size-14 rounded-full overflow-hidden border-2 border-primaryColor cursor-pointer"
         onClick={handleShowHideProfile}
