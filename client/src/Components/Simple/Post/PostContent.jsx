@@ -7,7 +7,7 @@ const postImg =
 const PostContent = ({ setPostImgDetailsStatus }) => {
   return (
     <div className="w-full flex flex-col gap-2">
-      <h2 className="text-secondaryColor">
+      <h2 className="text-secondaryColor text-lg md:text-2xl">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum,
         temporibus?
       </h2>

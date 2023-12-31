@@ -5,7 +5,13 @@ import { Link } from "react-router-dom";
 const userImg =
   "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1530&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-const Avatar1 = ({ showCTA = false, children }) => {
+const Avatar1 = ({
+  showCTA = false,
+  userName = "userName",
+  profilePic = "",
+  date = "",
+  children,
+}) => {
   return (
     <div className="w-full p-2 rounded-lg shadow-xl bg-whiteColor flex justify-start items-start gap-3">
       <Link
@@ -20,9 +26,15 @@ const Avatar1 = ({ showCTA = false, children }) => {
             <h4 className="hover:underline text-primaryColor font-bold capitalize text-lg">
               <Link to="/">Full Name</Link>
             </h4>
-            <p className="underline text-sm text-secondaryColor">
-              <Link to="/">userName</Link>
-            </p>
+            {date ? (
+              <p className="underline text-sm text-secondaryColor select-none">
+                {date}
+              </p>
+            ) : (
+              <p className="underline text-sm text-secondaryColor">
+                <Link to="/">{userName}</Link>
+              </p>
+            )}
           </div>
           {showCTA && (
             <div className="flex justify-center items-center gap-2">

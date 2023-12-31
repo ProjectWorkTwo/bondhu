@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "./Components/Simple/NavBar";
+import NavBar from "./Components/Simple/NavBar/NavBar";
 import { Outlet } from "react-router-dom";
 import OwnProfile from "./Sidebars/OwnProfile";
 import CustomScrollBar from "./Components/Simple/CustomScrollBar";

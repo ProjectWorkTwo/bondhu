@@ -20,16 +20,16 @@ const PostReaction = ({
         <span onClick={() => setShareMember((prev) => true)}>55k shares</span>
       </div>
       <div className="w-full grid grid-cols-3 gap-3">
-        <div className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim">
+        <div className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-xl md:text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim">
           <IoMdHeart />
         </div>
         <div
-          className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim"
+          className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-xl md:text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim"
           onClick={() => setCommentBoxStatus((prev) => !prev)}
         >
           <MdModeComment />
         </div>
-        <div className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim">
+        <div className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-xl md:text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim">
           <FaShare />
         </div>
       </div>
