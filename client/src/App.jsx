@@ -19,7 +19,7 @@ const App = () => {
         setSearchPopUpState={setSearchPopUpState}
         setOtherProfileState={setOtherProfileState}
       />
-      <section className="w-full flex justify-center items-center px-5">
+      <section className="w-full flex justify-center items-center px-5 mt-[80px]">
         <Outlet />
       </section>
       <OwnProfile

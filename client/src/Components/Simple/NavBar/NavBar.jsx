@@ -6,6 +6,7 @@ import { FaPager } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
 import { FaBars } from "react-icons/fa";
 import NavBarMobile from "./NavBarMobile";
+import { IoMdSearch } from "react-icons/io";
 
 const tabs = [
   {
@@ -22,6 +23,11 @@ const tabs = [
     text: "page",
     link: "/pages",
     icon: <FaPager />,
+  },
+  {
+    text: "search",
+    link: null,
+    icon: <IoMdSearch />,
   },
 ];
 const tabsMobile = [
@@ -63,9 +69,8 @@ const NavBar = ({
   }, []);
   const handleLogOut = () => {};
   return (
-    <div className="w-[full] grid grid-cols-2 md:grid-cols-3 justify-center items-center  px-5 py-2 bg-primaryColor gap-2">
+    <div className="fixed top-0 left-0 z-[99] w-full grid grid-cols-2 md:grid-cols-3 justify-center items-center  px-5 py-2 bg-primaryColor gap-2 min-h-[80px]">
       {/* onClick={() => setOwnProfileState((prev) => true)}
-        onClick={() => setSearchPopUpState((prev) => true)}
         onClick={() => setOtherProfileState((prev) => true)} */}
       <Link
         to="/"
@@ -75,9 +80,20 @@ const NavBar = ({
       </Link>
       <div className="hidden md:flex justify-center items-center gap-4">
         {tabs.map(({ text, link, icon }, i) => (
-          <Link key={i} to={link} className="navTabIcon">
-            {icon}
-          </Link>
+          <React.Fragment key={i}>
+            {link ? (
+              <Link to={link} className="navTabIcon">
+                {icon}
+              </Link>
+            ) : (
+              <div
+                className="navTabIcon"
+                onClick={() => setSearchPopUpState((prev) => true)}
+              >
+                {icon}
+              </div>
+            )}
+          </React.Fragment>
         ))}
       </div>
       <div className="flex justify-end items-center gap-2">

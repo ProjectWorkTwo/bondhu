@@ -12,7 +12,7 @@ const SearchPopUp = ({ searchPopUpState, setSearchPopUpState }) => {
   const boxRef = useRef(null);
   return (
     <section
-      className={`fixed top-0 left-0 w-full ${
+      className={`fixed top-0 left-0 w-full z-[9999] ${
         searchPopUpState ? "translate-x-0" : "translate-x-full"
       } h-screen commonAnim`}
       onClick={(e) => hidePopUp(e, boxRef, setSearchPopUpState)}
@@ -23,7 +23,9 @@ const SearchPopUp = ({ searchPopUpState, setSearchPopUpState }) => {
       >
         <div className="w-full h-[200px] overflow-hidden relative grid place-items-center">
           <img src={coverImg} alt="" className="w-full h-full object-cover" />
-          <h2 className="absolute text-whiteColor select-none text-center">Find Your Friends</h2>
+          <h2 className="absolute text-whiteColor select-none text-center">
+            Find Your Friends
+          </h2>
         </div>
         <section className="w-full px-5">
           <SearchBox setSearchResult={setSearchResult} />
