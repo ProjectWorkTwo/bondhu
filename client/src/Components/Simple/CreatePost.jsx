@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CreatePostPopUp from "./CreatePostPopUp";
 
-const CreatePost = () => {
+const CreatePost = ({ privacy }) => {
   const [createPostStatus, setCreatePostStatus] = useState(false);
   return (
     <>
@@ -11,7 +11,9 @@ const CreatePost = () => {
       >
         Create Post
       </button>
-      {createPostStatus && <CreatePostPopUp setStatus={setCreatePostStatus} />}
+      {createPostStatus && (
+        <CreatePostPopUp setStatus={setCreatePostStatus} privacy={privacy} />
+      )}
     </>
   );
 };

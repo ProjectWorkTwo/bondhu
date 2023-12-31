@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowDropup, IoIosArrowUp } from "react-icons/io";
 
 const Accordion = ({ title, children }) => {
-  const [accordionState, setAccordionState] = useState(true);
+  const [accordionState, setAccordionState] = useState(false);
   return (
     <div>
       <div className="flex justify-between items-center gap-2 bg-primaryColor/5 rounded-md p-2 cursor-pointer" onClick={() => setAccordionState((prev) => !prev)}>

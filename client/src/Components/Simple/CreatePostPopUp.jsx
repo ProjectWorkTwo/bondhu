@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ScrollBar from "./ScrollBar";
 import hidePopUp from "../CustomFunction/hidePopUp";
 
-const CreatePostPopUp = ({ setStatus }) => {
+const CreatePostPopUp = ({ setStatus, privacy = true }) => {
   const [postData, setPostData] = useState({
     heading: "",
     postImg: "",
@@ -82,42 +82,44 @@ const CreatePostPopUp = ({ setStatus }) => {
                   onChange={handleChange}
                   hidden
                 />
-                <div className="w-full flex gap-4">
-                  <label
-                    htmlFor="public"
-                    className={`btnFill1 w-full flex gap-3 justify-center items-center commonAnim ${
-                      postData["postPrivacy"] === "public"
-                        ? "scale-90"
-                        : "scale-100"
-                    }`}
-                  >
-                    <span
-                      className={`size-5 ${
+                {privacy && (
+                  <div className="w-full flex gap-4">
+                    <label
+                      htmlFor="public"
+                      className={`btnFill1 w-full flex gap-3 justify-center items-center commonAnim ${
                         postData["postPrivacy"] === "public"
-                          ? "border-[6px]"
-                          : "border-2"
-                      }  border-whiteColor flex-grow-0 flex-shrink-0 block rounded-full commonAnim`}
-                    ></span>
-                    <span>Public</span>
-                  </label>
-                  <label
-                    htmlFor="friendsOnly"
-                    className={`btnFill1 w-full flex gap-3 justify-center items-center commonAnim ${
-                      postData["postPrivacy"] !== "public"
-                        ? "scale-90"
-                        : "scale-100"
-                    }`}
-                  >
-                    <span
-                      className={`size-5 ${
+                          ? "scale-90"
+                          : "scale-100"
+                      }`}
+                    >
+                      <span
+                        className={`size-5 ${
+                          postData["postPrivacy"] === "public"
+                            ? "border-[6px]"
+                            : "border-2"
+                        }  border-whiteColor flex-grow-0 flex-shrink-0 block rounded-full commonAnim`}
+                      ></span>
+                      <span>Public</span>
+                    </label>
+                    <label
+                      htmlFor="friendsOnly"
+                      className={`btnFill1 w-full flex gap-3 justify-center items-center commonAnim ${
                         postData["postPrivacy"] !== "public"
-                          ? "border-[6px]"
-                          : "border-2"
-                      }  border-whiteColor flex-grow-0 flex-shrink-0 block rounded-full commonAnim`}
-                    ></span>
-                    <span>Friends only</span>
-                  </label>
-                </div>
+                          ? "scale-90"
+                          : "scale-100"
+                      }`}
+                    >
+                      <span
+                        className={`size-5 ${
+                          postData["postPrivacy"] !== "public"
+                            ? "border-[6px]"
+                            : "border-2"
+                        }  border-whiteColor flex-grow-0 flex-shrink-0 block rounded-full commonAnim`}
+                      ></span>
+                      <span>Friends only</span>
+                    </label>
+                  </div>
+                )}
               </div>
             </div>
           </ScrollBar>
