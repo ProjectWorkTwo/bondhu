@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { hidePopUp } from "../../../Constant/Constant";
 import ScrollBar from "../ScrollBar";
+import hidePopUp from "../../CustomFunction/hidePopUp";
 
 const AboutUpdatePopUp = ({
   fullName,
@@ -15,10 +15,6 @@ const AboutUpdatePopUp = ({
   title,
 }) => {
   const boxRef = useRef(null);
-  const wrapperRef = useRef(null);
-  useEffect(() => {
-    hidePopUp(wrapperRef, boxRef, setStatus);
-  }, []);
   const [userData, setUserData] = useState({
     fullName,
     bio,
@@ -30,9 +26,14 @@ const AboutUpdatePopUp = ({
     university,
   });
   const handleChange = (e) => {};
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
-    <section className="popupWrapper" ref={wrapperRef}>
+    <section
+      className="popupWrapper"
+      onClick={(e) => hidePopUp(e, boxRef, setStatus, true)}
+    >
       <div
         className="flex flex-col gap-1 bg-whiteColor shadow-2xl rounded-md w-[95vw] max-w-[450px] h-auto max-h-[95vh] p-5"
         ref={boxRef}

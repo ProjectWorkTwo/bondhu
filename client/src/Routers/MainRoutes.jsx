@@ -6,6 +6,9 @@ import SingleGroup from "../Pages/SingleGroup";
 import PagePage from "../Pages/PagePage";
 import SinglePage from "../Pages/SinglePage";
 import Home from "../Pages/Home";
+import SinglePost from "../Pages/SinglePost";
+import SignUpPage from "../Pages/SignUpPage";
+import LoginPage from "../Pages/LoginPage";
 
 const MainRoutes = () => {
   const router = createBrowserRouter([
@@ -32,6 +35,18 @@ const MainRoutes = () => {
         {
           path: "/page/:name",
           element: <SinglePage />,
+        },
+        {
+          path: "/post/:id",
+          element: <SinglePost />,
+        },
+        {
+          path: "/login",
+          element: <LoginPage />,
+        },
+        {
+          path: "/signup",
+          element: <SignUpPage />,
         },
       ],
     },

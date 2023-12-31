@@ -6,15 +6,17 @@ import PostReaction from "./PostReaction";
 import PostReactors from "./PostReactors";
 import PostShareMember from "./PostShareMember";
 import PostImgDetails from "./PostImgDetails";
+import UpdatePostPopUp from "./UpdatePostPopUp";
 
-const Post = () => {
+const Post = ({ fullScreen = false }) => {
   const [reactorBoxStatus, setReactorBoxStatus] = useState(false);
   const [commentBoxStatus, setCommentBoxStatus] = useState(false);
   const [shareMemberBoxStatus, setShareMember] = useState(false);
   const [postImgDetailsStatus, setPostImgDetailsStatus] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState(false);
   return (
     <div className="w-full p-4 flex flex-col gap-2 rounded-md shadow-lg border border-opacity-50">
-      <PostTop />
+      <PostTop setUpdateStatus={setUpdateStatus} />
       <PostContent setPostImgDetailsStatus={setPostImgDetailsStatus} />
       <PostReaction
         setReactorBoxStatus={setReactorBoxStatus}
@@ -27,13 +29,14 @@ const Post = () => {
           setStatus={setReactorBoxStatus}
         />
       )}
-      {commentBoxStatus && <PostComment />}
+      {commentBoxStatus && <PostComment fullScreen={fullScreen} />}
       {shareMemberBoxStatus && (
         <PostShareMember title="People who shared" setStatus={setShareMember} />
       )}
       {postImgDetailsStatus && (
         <PostImgDetails setStatus={setPostImgDetailsStatus} />
       )}
+      {updateStatus && <UpdatePostPopUp setStatus={setUpdateStatus} />}
     </div>
   );
 };

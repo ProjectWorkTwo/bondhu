@@ -6,7 +6,7 @@ import ThreeDotPopUp from "./ThreeDotPopUp";
 const userImg =
   "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1530&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-const PostTop = () => {
+const PostTop = ({ setUpdateStatus }) => {
   const threeDotRef = useRef(null);
   useEffect(() => {
     document.addEventListener("click", (e) => {
@@ -32,7 +32,11 @@ const PostTop = () => {
               Full Name
             </Link>
           </h3>
-          <p className="text-grayColor text-sm select-none">26 Dec 2023</p>
+          <p className="text-grayColor text-sm select-none">
+            <Link to="/post/3" className="underline">
+              26 Dec 2023
+            </Link>
+          </p>
         </div>
       </div>
       <div className="threeDotComponent relative" ref={threeDotRef}>
@@ -46,7 +50,7 @@ const PostTop = () => {
         </span>
         {threeDotPopUpState && (
           <div className="absolute top-10 right-0">
-            <ThreeDotPopUp />
+            <ThreeDotPopUp setUpdateStatus={setUpdateStatus} />
           </div>
         )}
       </div>

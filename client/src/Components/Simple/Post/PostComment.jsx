@@ -2,7 +2,7 @@ import React from "react";
 import { BsFillSendFill } from "react-icons/bs";
 import Comment from "./Comment";
 
-const PostComment = () => {
+const PostComment = ({ fullScreen }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -24,7 +24,11 @@ const PostComment = () => {
           placeholder="Write your comment...."
         />
       </form>
-      <div className="w-full flex flex-col gap-3 h-[300px] overflow-auto p-2">
+      <div
+        className={`w-full flex flex-col gap-3 ${
+          fullScreen || "h-[300px]"
+        } overflow-auto p-2`}
+      >
         <Comment />
         <Comment />
         <Comment />

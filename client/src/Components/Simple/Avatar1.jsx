@@ -16,12 +16,14 @@ const Avatar1 = ({ showCTA = false, children }) => {
       </Link>
       <div className="w-full flex flex-col gap-2">
         <div className="w-full flex flex-row justify-between items-center gap-2">
-          <Link to="/">
+          <div className="flex flex-col">
             <h4 className="hover:underline text-primaryColor font-bold capitalize text-lg">
-              Full Name
+              <Link to="/">Full Name</Link>
             </h4>
-            <p className="underline text-sm text-secondaryColor">userName</p>
-          </Link>
+            <p className="underline text-sm text-secondaryColor">
+              <Link to="/">userName</Link>
+            </p>
+          </div>
           {showCTA && (
             <div className="flex justify-center items-center gap-2">
               <button className="size-7 md:size-9 rounded-full bg-primaryColor grid place-items-center p-1 text-whiteColor text-base md:text-lg">
