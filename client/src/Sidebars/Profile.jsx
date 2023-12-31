@@ -11,7 +11,7 @@ const Profile = ({ profileState, setProfileState, author }) => {
     author === "own" ? `-translate-x-full` : `translate-x-full`;
   return (
     <section
-      className={`fixed top-0 left-0 z-[9999] ${
+      className={`fixed top-0 left-0 z-[9999] popupWrapper ${
         profileState ? activeStyle : diactiveStyle
       } w-full h-screen commonAnim`}
       onClick={(e) => hidePopUp(e, boxRef, setProfileState)}

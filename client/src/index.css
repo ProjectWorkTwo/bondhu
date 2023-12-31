@@ -75,7 +75,7 @@
   color: #ffffff !important;
 }
 
-.fullScreenNavLinks a.active{
+.fullScreenNavLinks a.active {
   background: rgba(255, 255, 255, 0.5) !important;
   scale: 0.8;
   border-color: #ffffff;
