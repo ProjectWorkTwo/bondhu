@@ -1,23 +1,20 @@
-import React, { useState } from "react";
-import { FaGear } from "react-icons/fa6";
-import PageSideBar from "../Sidebars/PageSideBar";
+import React from "react";
+import PageSideBarComplete from "../Sidebars/PageSideBarComplete";
+import Post from "../Components/Simple/Post/Post";
+import Posts from "../Components/Simple/Post/Posts";
 
 const PagePage = () => {
-  const [showHidePageSideBarState, setShowHidePageSideBarState] =
-    useState(false);
   return (
-    <section>
-      <PageSideBar
-        showHidePageSideBarState={showHidePageSideBarState}
-        setShowHidePageSideBarState={setShowHidePageSideBarState}
-      />
-      <span
-        className="fixed size-9 md:size-12 rounded-full bg-primaryColor border-primaryColor grid place-items-center text-whiteColor text-lg md:text-2xl right-2 bottom-2 cursor-pointer z-[9999]"
-        onClick={() => setShowHidePageSideBarState((prev) => !prev)}
-      >
-        <FaGear />
-      </span>
-      
+    <section className="w-[95%] max-w-6xl flex flex-col">
+      <PageSideBarComplete />
+      <section className="flex flex-col gap-5 py-5 w-full max-w-xl mx-auto">
+        <Posts>
+          <Post pagePost={true} />
+          <Post pagePost={true} />
+          <Post pagePost={true} />
+          <Post pagePost={true} />
+        </Posts>
+      </section>
     </section>
   );
 };

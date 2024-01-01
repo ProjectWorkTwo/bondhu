@@ -11,7 +11,7 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum,
         temporibus?
       </h2>
-      <p className="text-sm text-grayColor leading-normal">
+      <p className="text-sm text-grayColor leading-normal pb-2">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores minima
         corporis voluptates, voluptatem quod molestias repellat? Suscipit,
         eligendi perspiciatis? Necessitatibus nesciunt beatae quos numquam

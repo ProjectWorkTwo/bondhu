@@ -5,6 +5,7 @@ import AboutUpdatePopUp from "./AboutUpdatePopUp";
 const AboutComponent = ({
   fullName,
   bio,
+  email,
   country,
   mobile,
   city,
@@ -16,6 +17,7 @@ const AboutComponent = ({
   const info = {
     fullName,
     bio,
+    email,
     country,
     mobile,
     city,
@@ -35,8 +37,13 @@ const AboutComponent = ({
         {Object.entries(info).map(([text, value], i) => {
           if (value && text !== "fullName" && text !== "bio") {
             return (
-              <li key={i + value} className="flex gap-4 capitalize">
-                <span className="text-primaryColor font-bold">{text}:</span>
+              <li
+                key={i + value}
+                className={`flex gap-4 ${text !== "email" && "capitalize"}`}
+              >
+                <span className="text-primaryColor font-bold capitalize">
+                  {text}:
+                </span>
                 <p className="text-secondaryColor">{value}</p>
               </li>
             );
@@ -47,7 +54,9 @@ const AboutComponent = ({
       {aboutUpdatePopUpState && (
         <AboutUpdatePopUp
           setStatus={setAboutUpdatePopUpState}
-          {...info}
+          info={
+            (fullName, bio, country, mobile, city, school, college, university)
+          }
           title="Update Data"
         />
       )}

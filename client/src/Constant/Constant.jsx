@@ -21,7 +21,7 @@ export const months = [
 export const currentDate = () => {
   const time = new Date();
 
-  return `${time.getDate < 10 ? "0" + time.getDate() : time.getDate()} ${
+  return `${time.getDate() < 10 ? "0" + time.getDate() : time.getDate()} ${
     months[time.getMonth()]
   } ${time.getFullYear()}`;
 };

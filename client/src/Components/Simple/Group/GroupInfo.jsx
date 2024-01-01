@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import ListOfAvatarPopUp from "../ListOfAvatarPopUp";
+import ProfileInfoContainer from "./ProfileInfoContainer";
 
 const GroupInfo = () => {
   const [memberListStatus, setMemberListStatus] = useState(false);
   return (
-    <div className="w-[90%] max-w-[440px] mx-auto bg-whiteColor rounded-md shadow-lg -mt-28 relative z-10 flex flex-col justify-center items-center px-4 pb-4 border">
-      <div className="p-4 flex flex-col justify-center items-center gap-2">
+    <ProfileInfoContainer>
+      <div className="p-4 flex flex-col justify-center items-center gap-3">
         <h1 className="text-center capitalize">Group Name</h1>
         <span
           className="btnFill1 w-auto"
@@ -17,7 +18,7 @@ const GroupInfo = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus
           ipsum quis ligula vulputate, at auctor orci ullamcorper.
         </p>
-        <button className="btnFill1 w-auto min-w-28">Join</button>
+        <button className="btnFill1 w-auto min-w-[200px]">Join</button>
       </div>
       {memberListStatus && (
         <ListOfAvatarPopUp
@@ -25,7 +26,7 @@ const GroupInfo = () => {
           setStatus={setMemberListStatus}
         />
       )}
-    </div>
+    </ProfileInfoContainer>
   );
 };
 

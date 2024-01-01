@@ -1,21 +1,23 @@
 import React, { useContext } from "react";
-import { FaCheck, FaTrash } from "react-icons/fa6";
 import { ProfilePopUpContext } from "../../Providers/ProfilePopUpProvider";
 import { Link } from "react-router-dom";
-import { getURLFromName } from "../CustomFunction/getURLFromName";
 
 const userImg =
   "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1530&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-const Avatar1 = ({
-  avatarSize = "size-14",
+const coverImg = `https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`;
+
+const GroupAvatar = ({
+  avatarSize = "size-20",
   separateCompo = true,
   showCTA = false,
-  userName = "", // if it is a page then user will mean's the page name
+  groupName = "Group Name",
+  fullName = "Full Name",
+  userName = "",
+  groupCover = "",
   profilePic = "",
   date = "",
   children,
-  pagePost = false,
 }) => {
   const { setOwnProfileState, setOtherProfileState } =
     useContext(ProfilePopUpContext);
@@ -23,49 +25,51 @@ const Avatar1 = ({
     // setOwnProfileState((prv) => true);
     setOtherProfileState((prv) => true);
   };
+  const groupUrl = `${location.origin}/group/${groupName
+    .trim()
+    .toLowerCase()
+    .split(" ")
+    .join("-")}`;
   return (
     <div
       className={`w-full p-2 rounded-lg ${
         separateCompo && "shadow-xl border"
-      }  bg-whiteColor flex justify-start items-center gap-3`}
+      }  bg-whiteColor flex justify-start items-center gap-5`}
     >
-      {pagePost ? (
-        <Link
-          to={getURLFromName("page", userName)}
-          className={`flex-grow-0 flex-shrink-0 ${
-            avatarSize || "size-14"
-          } rounded-full overflow-hidden border-2 border-primaryColor cursor-pointer`}
-        >
-          <img src={userImg} alt="" className="size-full object-cover" />
+      <div
+        className={`flex-grow-0 flex-shrink-0 ${
+          avatarSize || "size-14"
+        } cursor-pointer relative`}
+      >
+        <Link to={`${groupUrl}`}>
+          <img
+            src={coverImg}
+            alt=""
+            className="block size-full object-cover rounded-lg border-2 border-primaryColor "
+          />
         </Link>
-      ) : (
         <div
-          className={`flex-grow-0 flex-shrink-0 ${
-            avatarSize || "size-14"
-          } rounded-full overflow-hidden border-2 border-primaryColor cursor-pointer`}
+          className="size-4/5 rounded-full absolute -bottom-2 -right-2 overflow-hidden border-2 border-primaryColor"
           onClick={handleShowHideProfile}
         >
           <img src={userImg} alt="" className="size-full object-cover" />
         </div>
-      )}
+      </div>
       <div className="w-full flex flex-col gap-2">
         <div className="w-full flex flex-row justify-between items-center gap-2">
-          <div className="flex flex-col">
-            {pagePost ? (
-              <Link
-                to={getURLFromName("page", "Full Name")}
-                className="hover:underline text-primaryColor font-bold capitalize text-lg cursor-pointer"
-              >
-                Full Name
-              </Link>
-            ) : (
-              <h4
-                className="hover:underline text-primaryColor font-bold capitalize text-lg cursor-pointer"
-                onClick={handleShowHideProfile}
-              >
-                Full Name
-              </h4>
-            )}
+          <div className="flex flex-col justify-center items-start">
+            <Link
+              to={`${groupUrl}`}
+              className="text-primaryColor font-bold capitalize text-xl cursor-pointer"
+            >
+              {groupName}
+            </Link>
+            <h5
+              className="hover:underline text-primaryColor font-semibold capitalize text-lg cursor-pointer underline"
+              onClick={handleShowHideProfile}
+            >
+              {fullName}
+            </h5>
             {userName && (
               <p
                 className="underline text-sm text-secondaryColor cursor-pointer"
@@ -75,7 +79,10 @@ const Avatar1 = ({
               </p>
             )}
             {date && (
-              <Link to={`/post/3`} className="underline text-sm text-secondaryColor select-none cursor-pointer">
+              <Link
+                to={`/post/3`}
+                className="underline text-sm text-secondaryColor select-none cursor-pointer"
+              >
                 {date}
               </Link>
             )}
@@ -97,4 +104,4 @@ const Avatar1 = ({
   );
 };
 
-export default Avatar1;
+export default GroupAvatar;

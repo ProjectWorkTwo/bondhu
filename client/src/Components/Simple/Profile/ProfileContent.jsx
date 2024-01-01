@@ -7,6 +7,7 @@ import Friends from "./Friends";
 const userData = {
   fullName: "Full Name",
   bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus ipsum quis ligula vulputate, at auctor orci ullamcorper.",
+  email: "testemail@gmail.com",
   country: "Fakeland",
   mobile: "+1234567890",
   city: "Faketown",

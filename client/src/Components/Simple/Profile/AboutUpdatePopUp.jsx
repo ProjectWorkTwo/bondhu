@@ -3,14 +3,7 @@ import ScrollBar from "../ScrollBar";
 import hidePopUp from "../../CustomFunction/hidePopUp";
 
 const AboutUpdatePopUp = ({
-  fullName,
-  bio,
-  country,
-  mobile,
-  city,
-  school,
-  college,
-  university,
+  info: { fullName, bio, country, mobile, city, school, college, university },
   setStatus,
   title,
 }) => {
