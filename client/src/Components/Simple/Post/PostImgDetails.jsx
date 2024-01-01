@@ -14,7 +14,7 @@ const PostImgDetails = ({ setStatus }) => {
       <img
         src={postImg}
         alt=""
-        className="max-w-[90vw] max-h-[90vh] w-auto h-auto border-8 border-white object-contain  select-none cursor-pointer shadow-2xl"
+        className="max-w-[90vw] max-h-[90vh] w-auto h-auto border-8 border-white object-contain  select-none cursor-pointer shadow-2xl rounded-md"
         ref={boxRef}
       />
     </section>
