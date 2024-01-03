@@ -7,6 +7,7 @@ import { MdGroups } from "react-icons/md";
 import { FaBars } from "react-icons/fa";
 import NavBarMobile from "./NavBarMobile";
 import { IoMdSearch } from "react-icons/io";
+import logo from "../../../assets/logo.svg";
 
 const tabs = [
   {
@@ -72,9 +73,9 @@ const NavBar = ({
     <div className="fixed top-0 left-0 z-[99] w-full grid grid-cols-2 md:grid-cols-3 justify-center items-center  px-5 py-2 bg-primaryColor gap-2 min-h-[60px]">
       <Link
         to="/"
-        className="w-fit text-2xl emd:text-3xl font-black text-whiteColor select-none"
+        className="select-none w-full max-w-32 bg-whiteColor rounded-full flex-shrink-0"
       >
-        Bondhu
+        <img src={logo} alt="" className="w-full h-full object-contain" />
       </Link>
       <div className="fullScreenNavLinks hidden md:flex justify-center items-center gap-4">
         {tabs.map(({ text, link, icon }, i) => (

@@ -1,27 +1,62 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ScrollBar from "../ScrollBar";
 import hidePopUp from "../../CustomFunction/hidePopUp";
+import { languages } from "../../../Constant/Constant";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../Loader";
 
 const AboutUpdatePopUp = ({
-  info: { fullName, bio, country, mobile, city, school, college, university },
-  setStatus,
-  title,
-}) => {
-  const boxRef = useRef(null);
-  const [userData, setUserData] = useState({
+  info: {
     fullName,
     bio,
     country,
+    language,
     mobile,
     city,
     school,
     college,
     university,
+  },
+  setStatus,
+  title,
+}) => {
+  const boxRef = useRef(null);
+  const [countries, setCountries] = useState([]);
+  const [userData, setUserData] = useState({
+    fullName: "",
+    bio: "",
+    country: "",
+    mobile: "",
+    language: JSON.stringify(languages[0]),
+    city: "",
+    school: "",
+    college: "",
+    university: "",
   });
-  const handleChange = (e) => {};
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["countryList"],
+    queryFn: () =>
+      axios.get("https://restcountries.com/v3.1/all").then((res) => {
+        const data = res?.data?.map((item) => item["name"]["common"]);
+        setCountries((prev) => data);
+        return data;
+      }),
+  });
+
+  const handleChange = (e) => {
+    setUserData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    userData["language"] = JSON.parse(userData["language"]);
   };
+
+  if (isLoading || isError) return <Loader />;
   return (
     <section
       className="popupWrapper"
@@ -54,14 +89,6 @@ const AboutUpdatePopUp = ({
                 onChange={handleChange}
               />
               <input
-                type="text"
-                name="country"
-                className="input1"
-                placeholder="Country..."
-                value={userData["country"]}
-                onChange={handleChange}
-              />
-              <input
                 type="number"
                 name="mobile"
                 className="input1"
@@ -69,6 +96,56 @@ const AboutUpdatePopUp = ({
                 value={userData["mobile"]}
                 onChange={handleChange}
               />
+              <div className="flex">
+                <label
+                  htmlFor="country"
+                  className="text-sm select-none bg-primaryColor text-whiteColor px-1  flex justify-start items-center"
+                >
+                  Country:
+                </label>
+                <select
+                  name="country"
+                  id="country"
+                  className="input1 bg-whiteColor"
+                  value={userData["country"]}
+                  onChange={handleChange}
+                >
+                  {countries.map((item) => (
+                    <option
+                      key={item}
+                      value={userData["country"]}
+                      className="bg-whiteColor checked:bg-primaryColor checked:text-whiteColor"
+                    >
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex">
+                <label
+                  htmlFor="country"
+                  className="text-sm select-none bg-primaryColor text-whiteColor px-1  flex justify-start items-center"
+                >
+                  Language:
+                </label>
+                <select
+                  name="language"
+                  id="language"
+                  className="input1 bg-whiteColor"
+                  value={userData["language"]}
+                  onChange={handleChange}
+                >
+                  {languages.map(({ name, code }, i) => (
+                    <option
+                      key={i}
+                      value={JSON.stringify({ name, code })}
+                      className="bg-whiteColor checked:bg-primaryColor checked:text-whiteColor"
+                    >
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <input
                 type="text"
                 name="city"
@@ -104,7 +181,7 @@ const AboutUpdatePopUp = ({
             </div>
           </ScrollBar>
           <button type="submit" className="btnFill1">
-            Create Post
+            Update
           </button>
         </form>
       </div>

@@ -6,6 +6,7 @@ const AboutComponent = ({
   fullName,
   bio,
   email,
+  language,
   country,
   mobile,
   city,
@@ -18,6 +19,7 @@ const AboutComponent = ({
     fullName,
     bio,
     email,
+    language,
     country,
     mobile,
     city,
@@ -55,7 +57,7 @@ const AboutComponent = ({
         <AboutUpdatePopUp
           setStatus={setAboutUpdatePopUpState}
           info={
-            (fullName, bio, country, mobile, city, school, college, university)
+            (fullName, bio, country, language, mobile, city, school, college, university)
           }
           title="Update Data"
         />
