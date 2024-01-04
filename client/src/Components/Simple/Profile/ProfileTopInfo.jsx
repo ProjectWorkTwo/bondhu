@@ -18,7 +18,7 @@ const ProfileTopInfo = () => {
           </label>
         </form>
       </div>
-      <div className="p-4 flex flex-col justify-center items-center gap-2">
+      <div className="w-full p-4 flex flex-col justify-center items-center gap-2">
         <h1 className="text-center capitalize">Full Name</h1>
         <span className="btnFill1 w-auto">userName</span>
         <p className="text-center text-grayColor text-sm leading-normal">

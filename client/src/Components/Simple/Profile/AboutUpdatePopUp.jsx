@@ -1,10 +1,7 @@
 import React, { useRef, useState } from "react";
 import ScrollBar from "../ScrollBar";
 import hidePopUp from "../../CustomFunction/hidePopUp";
-import { languages } from "../../../Constant/Constant";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import Loader from "../Loader";
+import { countries, languages } from "../../../Constant/Constant";
 
 const AboutUpdatePopUp = ({
   info: {
@@ -22,7 +19,6 @@ const AboutUpdatePopUp = ({
   title,
 }) => {
   const boxRef = useRef(null);
-  const [countries, setCountries] = useState([]);
   const [userData, setUserData] = useState({
     fullName: "",
     bio: "",
@@ -35,16 +31,6 @@ const AboutUpdatePopUp = ({
     university: "",
   });
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["countryList"],
-    queryFn: () =>
-      axios.get("https://restcountries.com/v3.1/all").then((res) => {
-        const data = res?.data?.map((item) => item["name"]["common"]);
-        setCountries((prev) => data);
-        return data;
-      }),
-  });
-
   const handleChange = (e) => {
     setUserData((prev) => ({
       ...prev,
@@ -53,10 +39,9 @@ const AboutUpdatePopUp = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    userData["language"] = JSON.parse(userData["language"]);
+    console.log(userData);
   };
 
-  if (isLoading || isError) return <Loader />;
   return (
     <section
       className="popupWrapper"
@@ -113,7 +98,6 @@ const AboutUpdatePopUp = ({
                   {countries.map((item) => (
                     <option
                       key={item}
-                      value={userData["country"]}
                       className="bg-whiteColor checked:bg-primaryColor checked:text-whiteColor"
                     >
                       {item}

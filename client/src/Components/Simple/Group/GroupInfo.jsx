@@ -6,7 +6,7 @@ const GroupInfo = () => {
   const [memberListStatus, setMemberListStatus] = useState(false);
   return (
     <ProfileInfoContainer>
-      <div className="p-4 flex flex-col justify-center items-center gap-3">
+      <div className="w-full p-4 flex flex-col justify-center items-center gap-3">
         <h1 className="text-center capitalize">Group Name</h1>
         <span
           className="btnFill1 w-auto"
