@@ -14,6 +14,7 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
     `I am Abdus Shohid Shakil, a programmer and front-end developer with a deep passion for web technology. Currently studying Computer Science and Engineering (CSE) in Bangladesh, I have accumulated approximately two years of coding experience, with a specific focus on web development for the past year`
   );
   const [translationState, setTranslationState] = useState(false);
+  const [loadingState, setLoadingState] = useState(false);
   const [translatedTitle, setTranslatedTitle] = useState("");
   const [translatedContent, setTranslatedContent] = useState("");
   const translateText = async (text) => {
@@ -27,10 +28,12 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
   };
   const handleTranslationState = async () => {
     if (!translationState) {
+      setLoadingState((prev) => true);
       const updatedTitle = await translateText(postTitle);
       const updatedContent = await translateText(postContent);
       setTranslatedTitle((prev) => updatedTitle);
       setTranslatedContent((prev) => updatedContent);
+      setLoadingState((prev) => false);
     }
     setTranslationState((prev) => !prev);
   };
@@ -39,13 +42,18 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
       <div className="w-full flex flex-col gap-2">
         <h2 className="text-secondaryColor text-lg md:text-2xl">{postTitle}</h2>
         <p className="text-sm text-grayColor leading-normal">{postContent}</p>
-        <span
-          className="px-3 py-1 rounded-full bg-primaryColor text-whiteColor text-base cursor-pointer flex gap-4 justify-center items-center w-fit select-none"
-          onClick={handleTranslationState}
-        >
-          <BsTranslate />
-          <span className="text-sm">Translate</span>
-        </span>
+        <div className="flex justify-start items-center gap-4">
+          <span
+            className="px-3 py-1 rounded-full bg-primaryColor text-whiteColor text-base cursor-pointer flex gap-4 justify-center items-center w-fit select-none"
+            onClick={handleTranslationState}
+          >
+            <BsTranslate />
+            <span className="text-sm">Translate</span>
+          </span>
+          {loadingState && (
+            <span className="size-5 rounded-full border-4 border-primaryColor border-t-transparent border-b-transparent animate-spin"></span>
+          )}
+        </div>
         {translationState && (
           <div className="w-full border-l-4 pl-2 flex flex-col gap-2">
             <h2 className="text-secondaryColor text-lg md:text-2xl">
