@@ -3,8 +3,12 @@ import ScrollBar from "../Components/Simple/ScrollBar";
 import hidePopUp from "../Components/CustomFunction/hidePopUp";
 import SideBarAccordion from "../Components/Simple/SideBarAccordion";
 import { GroupSideBarContext } from "../Providers/GroupSideBarProvider";
+import { CreateGroupPageFormContext } from "../Providers/CreateGroupPageFormProvider";
 
 const GroupSideBar = () => {
+  const { setCreateGroupPageFormState } = useContext(
+    CreateGroupPageFormContext
+  );
   const { showHideGroupSideBarState, setShowHideGroupSideBarState } =
     useContext(GroupSideBarContext);
   const boxRef = useRef(null);
@@ -21,7 +25,12 @@ const GroupSideBar = () => {
         className="bg-whiteColor w-[90%] max-w-[400px] absolute top-0 left-0 h-full shadow-2xl py-5 px-2 flex flex-col gap-4"
         ref={boxRef}
       >
-        <button className="btnFill1">Create Group</button>
+        <button
+          className="btnFill1"
+          onClick={() => setCreateGroupPageFormState((prev) => "group")}
+        >
+          Create Group
+        </button>
         <ScrollBar>
           <div className="w-full flex flex-col gap-5">
             <SideBarAccordion title="Group you manage" />

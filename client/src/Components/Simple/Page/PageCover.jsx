@@ -7,16 +7,16 @@ const coverImg = `https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q
 const PageCover = () => {
   return (
     <section
-      className="w-full min-h-[400px] rounded-b-lg flex flex-col justify-end items-end overflow-hidden"
+      className="w-full min-h-[400px] rounded-b-lg overflow-hidden relative"
       style={{
         ...bgDefault(coverImg),
       }}
     >
-      <form className="p-2">
+      <form className="p-2 z-10">
         <input type="file" name="profileCover" id="profileCover" hidden />
         <label
           htmlFor="profileCover"
-          className="size-10 rounded-full border-2 border-primaryColor grid place-items-center bg-whiteColor hover:bg-primaryColor text-primaryColor hover:text-whiteColor cursor-pointer"
+          className="absolute top-3 bottom-auto sm:top-auto sm:bottom-3 right-3 size-10 rounded-full border-2 border-primaryColor grid place-items-center bg-whiteColor hover:bg-primaryColor text-primaryColor hover:text-whiteColor cursor-pointer"
         >
           <FaCamera className="text-xl" />
         </label>

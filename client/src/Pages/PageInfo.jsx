@@ -20,7 +20,7 @@ const PageInfo = () => {
           </label>
         </form>
       </div>
-      <div className="p-4 flex flex-col justify-center items-center gap-2">
+      <div className="w-full p-4 flex flex-col justify-center items-center gap-2">
         <h1 className="text-center capitalize">Page Name</h1>
         <span
           className="btnFill1 w-auto"
