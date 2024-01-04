@@ -7,25 +7,25 @@ import ProfilePopUpProvider from "./Providers/ProfilePopUpProvider.jsx";
 import PageSideBarProvider from "./Providers/PageSideBarProvider.jsx";
 import GroupSideBarProvider from "./Providers/GroupSideBarProvider.jsx";
 
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CreateGroupPageFormProvider from "./Providers/CreateGroupPageFormProvider.jsx";
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ProfilePopUpProvider>
-        <GroupSideBarProvider>
-          <PageSideBarProvider>
-            <MainRoutes>
-              <App />
-            </MainRoutes>
-          </PageSideBarProvider>
-        </GroupSideBarProvider>
-      </ProfilePopUpProvider>
+      <CreateGroupPageFormProvider>
+        <ProfilePopUpProvider>
+          <GroupSideBarProvider>
+            <PageSideBarProvider>
+              <MainRoutes>
+                <App />
+              </MainRoutes>
+            </PageSideBarProvider>
+          </GroupSideBarProvider>
+        </ProfilePopUpProvider>
+      </CreateGroupPageFormProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

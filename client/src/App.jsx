@@ -7,6 +7,8 @@ import OtherProfile from "./Sidebars/OtherProfile";
 import UnAuthorizePopup from "./Components/Simple/UnAuthorizePopup";
 import SearchPopUp from "./Sidebars/SearchPopUp";
 import { ProfilePopUpContext } from "./Providers/ProfilePopUpProvider";
+import { CreateGroupPageFormContext } from "./Providers/CreateGroupPageFormProvider";
+import CreateGroupPageForm from "./Components/Simple/CreateGroupPageForm";
 
 const App = () => {
   const {
@@ -15,6 +17,7 @@ const App = () => {
     otherProfileState,
     setOtherProfileState,
   } = useContext(ProfilePopUpContext);
+  const { createGroupPageFormState } = useContext(CreateGroupPageFormContext);
   const [autorizePopUpState, setAutorizePopUpState] = useState(false);
   const [searchPopUpState, setSearchPopUpState] = useState(false);
   return (
@@ -39,6 +42,8 @@ const App = () => {
       {autorizePopUpState && (
         <UnAuthorizePopup setStatus={setAutorizePopUpState} />
       )}
+
+      {createGroupPageFormState && <CreateGroupPageForm />}
       <CustomScrollBar />
     </>
   );

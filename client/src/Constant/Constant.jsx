@@ -33,6 +33,13 @@ export const bgDefault = (coverImg) => ({
   backgroundRepeat: "no-repeat",
 });
 
+export const toCapitalize = (str) => {
+  const temp = str[0].toUpperCase();
+  str = str.toLowerCase().split("");
+  str[0] = temp;
+  return str.join("");
+};
+
 export const languages = [
   {
     name: "English",
