@@ -5,10 +5,12 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 8001;
+
 // const authRouter = require("./routers/auth");
 // const profileRoute = require("./routers/profile");
 // const homeRoute = require("./routers/home");
 // const groupRoute = require("./routers/group");
+
 
 app.use(cors());
 app.use(express.json());
@@ -67,8 +69,6 @@ async function run() {
       res.send({success: "user found"});
     });
     
-
-
 
 
 

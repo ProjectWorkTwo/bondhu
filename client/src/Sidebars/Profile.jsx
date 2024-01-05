@@ -4,18 +4,17 @@ import ProfileTop from "../Components/Simple/Profile/ProfileTop";
 import ProfileContent from "../Components/Simple/Profile/ProfileContent";
 import hidePopUp from "../Components/CustomFunction/hidePopUp";
 
-const Profile = ({
-  profileState,
-  setProfileState,
-  author,
-}) => {
+const Profile = ({ profileState, setProfileState, author }) => {
   const boxRef = useRef(null);
-  const activeStyle = author === "own" ? `translate-x-0` : `translate-x-0`;
+  const activeStyle =
+    (author === "own" ? `translate-x-0 opacity-100` : `translate-x-0`) +
+    " opacity-100";
   const diactiveStyle =
-    author === "own" ? `-translate-x-full` : `translate-x-full`;
+    (author === "own" ? `-translate-x-full` : `translate-x-full`) +
+    " opacity-0";
   return (
     <section
-      className={`fixed top-0 left-0 ${
+      className={`fixed top-0 left-0 z-[9999] popupWrapper ${
         profileState ? activeStyle : diactiveStyle
       } w-full h-screen commonAnim`}
       onClick={(e) => hidePopUp(e, boxRef, setProfileState)}

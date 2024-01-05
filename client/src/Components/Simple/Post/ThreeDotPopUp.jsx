@@ -1,17 +1,41 @@
 import React from "react";
-import Divider from "../Divider";
+import { IoCopySharp } from "react-icons/io5";
+import { MdEdit } from "react-icons/md";
+import { AiFillDelete } from "react-icons/ai";
 
-const ThreeDotPopUp = ({ setUpdateStatus }) => {
+const ThreeDotPopUp = ({ setUpdateStatus, setThreeDotPopUpState }) => {
+  const url = `${location.origin}/post/3`;
+  const handleCopyLink = () => navigator.clipboard.writeText(url);
+  const handleDelete = () => {};
   return (
-    <div className="p-2 flex flex-col bg-whiteColor border rounded-md shadow-lg w-[200px] gap-2">
+    <div className="p-2 flex flex-col bg-whiteColor divide-y-2 divide-primaryColor border rounded-md shadow-lg w-[200px]">
       <div
         className="threeDotPopupButton"
-        onClick={() => setUpdateStatus((prev) => !prev)}
+        onClick={() => {
+          handleCopyLink();
+          setThreeDotPopUpState((prev) => false);
+        }}
       >
-        Edit
+        <IoCopySharp className="text-xl" /> Copy Link
       </div>
-      <Divider />
-      <div className="threeDotPopupButton">Delete</div>
+      <div
+        className="threeDotPopupButton"
+        onClick={() => {
+          setThreeDotPopUpState((prev) => false);
+          setUpdateStatus((prev) => !prev);
+        }}
+      >
+        <MdEdit className="text-xl" /> Edit
+      </div>
+      <div
+        className="threeDotPopupButton"
+        onClick={() => {
+          handleDelete();
+          setThreeDotPopUpState((prev) => !prev);
+        }}
+      >
+        <AiFillDelete className="text-xl" /> Delete
+      </div>
     </div>
   );
 };

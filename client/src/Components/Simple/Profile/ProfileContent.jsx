@@ -3,10 +3,13 @@ import Posts from "../Post/Posts";
 import CreatePost from "../CreatePost";
 import AboutComponent from "./AboutComponent";
 import Friends from "./Friends";
+import Post from "../Post/Post";
 
 const userData = {
   fullName: "Full Name",
+  language: "en",
   bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus ipsum quis ligula vulputate, at auctor orci ullamcorper.",
+  email: "testemail@gmail.com",
   country: "Fakeland",
   mobile: "+1234567890",
   city: "Faketown",
@@ -56,7 +59,12 @@ const ProfileContent = () => {
         {currentActiveTab === "posts" && (
           <>
             <CreatePost />
-            <Posts />
+            <Posts>
+              <Post />
+              <Post />
+              <Post />
+              <Post />
+            </Posts>
           </>
         )}
         {currentActiveTab === "about" && <AboutComponent {...userData} />}
