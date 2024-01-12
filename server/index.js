@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require('mongodb');
-require('dotenv').config();
+const { MongoClient, ServerApiVersion } = require("mongodb");
+require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 8001;
@@ -11,8 +11,12 @@ const port = process.env.PORT || 8001;
 // const homeRoute = require("./routers/home");
 // const groupRoute = require("./routers/group");
 
-
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
@@ -21,14 +25,13 @@ app.use(express.json());
 // app.use(profileRoute);
 // app.use(groupRoute);
 
-
 const uri = process.env.DB_URI;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 async function run() {
   try {
@@ -36,12 +39,11 @@ async function run() {
     const userCollection = client.db("bondhuDB").collection("users");
     const postCollection = client.db("bondhuDB").collection("posts");
 
-
     /*
      ** User verification methods
      * start
      */
-     const findUser = async (req, res, next) => {
+    const findUser = async (req, res, next) => {
       const email = req.body.email;
       const query = { email: email };
       const result = await userCollection.findOne(query);
@@ -55,49 +57,47 @@ async function run() {
      * ends here
      */
 
-
-    app.get('/', async(req, res) => {
+    app.get("/", async (req, res) => {
       res.send("Sweet Home");
     });
 
     /**
      * ! Methods for user
-    **/
-    app.post('/createuser', async(req, res) => {
+     **/
+    app.post("/createuser", async (req, res) => {
       const user = req.body;
-      const {email} = user;
-      const query = {email: email};
+      const { email } = user;
+      const query = { email: email };
       const userData = await userCollection.findOne(query);
 
-      if(userData) {
-        res.send({error: "user already exists"});
+      if (userData) {
+        res.send({ error: "user already exists" });
         return;
       }
       const result = await userCollection.insertOne(user);
-      res.send(result);
+      res.send({ success: "Account created successfully!" });
     });
 
-    app.get('/getuser', async(req, res) => {
-      const user = req.body;
-      const {email} = user;
-      const query = {email: email};
+    app.get("/getuser", async (req, res) => {
+      const { email, password } = req.headers;
+      const query = { email, password };
       const userData = await userCollection.findOne(query);
 
-      if(!userData) {
-        res.send({error: "user already exists"});
+      if (!userData) {
+        res.send({ error: "user already exists" });
         return;
       }
-      res.send({success: "user found", ...userData});
+      res.send({ success: "user found", ...userData });
     });
 
-    app.put("/updateuser/:id",findUser, async (req, res) => {
+    app.put("/updateuser/:id", findUser, async (req, res) => {
       //! user should be veriied
 
       const id = req.params.id;
       const query = { _id: new Object(id) };
       const userData = await userCollection.findOne(query);
 
-      if (req.result.email!==userData.email) {
+      if (req.result.email !== userData.email) {
         return res.send({ error: "bad request" });
       }
 
@@ -112,11 +112,10 @@ async function run() {
       const result = await userCollection.updateOne(query, setUser, options);
       res.send(result);
     });
-    
 
     /**
-     * ! Methods for posts 
-    **/
+     * ! Methods for posts
+     **/
     app.post("/createpost", findUser, async (req, res) => {
       //* user should be veriied
       if (!req.result) {
@@ -128,9 +127,9 @@ async function run() {
       res.send(result);
     });
 
-    app.put('/updatepost/:id', findUser, async (req, res) => {
+    app.put("/updatepost/:id", findUser, async (req, res) => {
       if (!req.result) {
-        return res.send({error: "bad request"});
+        return res.send({ error: "bad request" });
       }
 
       const options = { upsert: false };
@@ -139,12 +138,12 @@ async function run() {
       const result = await postCollection.findOne(query);
 
       if (req.result.email !== result.email) {
-        return res.send({error: "bad request"});
+        return res.send({ error: "bad request" });
       }
 
       const updatePost = req.body;
       console.log(updatePost);
-      console.log(result)
+      console.log(result);
       const setPost = {
         $set: {
           ...result,
@@ -165,47 +164,17 @@ async function run() {
       res.send(result);
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     app.listen(port, () => {
       console.log(`server is running at http://localhost:${port}`);
     });
 
-
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
   }
 }
 run().catch(console.dir);
-
-
