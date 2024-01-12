@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import LoginSignUpSlider from "../Components/Simple/LoginSIgnUpSlider";
+import axios from "axios";
+import { baseURL } from "../Constant/Constant";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [showHideState, setShowHideState] = useState(false);
   const [formData, setFormData] = useState({
-    userNameOrEmail: "",
+    email: "",
     password: "",
   });
   const handleChange = (e) => {
@@ -21,6 +25,36 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+
+    axios
+      .get(`${baseURL}/getuser`, {
+        headers: formData,
+      })
+      .then((res) => {
+        const data = res?.data;
+        if (data?.error) {
+          return Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: data?.error,
+          });
+        } else {
+          navigate("/");
+          const { email, password } = formData;
+          localStorage.setItem(
+            "authorData",
+            JSON.stringify({
+              email,
+              password,
+            })
+          );
+          return Swal.fire({
+            icon: "success",
+            title: "Successfully",
+            text: data?.success,
+          });
+        }
+      });
   };
   return (
     <section className="w-full h-full min-h-screen p-5 grid grid-cols-1 md:grid-cols-2 place-items-center gap-5 bg-secondaryColor relative">
@@ -40,10 +74,10 @@ const LoginPage = () => {
           onSubmit={handleSubmit}
         >
           <input
-            type="text"
-            name="userNameOrEmail"
-            placeholder="Username or email"
-            value={formData["userNameOrEmail"]}
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData["email"]}
             onChange={handleChange}
             className="input1"
           />

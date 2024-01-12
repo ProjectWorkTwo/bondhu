@@ -5,8 +5,13 @@ import "./Login.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import LoginSignUpSlider from "../Components/Simple/LoginSIgnUpSlider";
+import { baseURL } from "../Constant/Constant";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -28,7 +33,31 @@ const SignUpPage = () => {
       password: "",
       confirmPassword: "",
     }));
-    console.log(formData);
+    const { fullName, email, password } = formData;
+    axios
+      .post(`${baseURL}/createuser`, {
+        fullName,
+        email,
+        password,
+      })
+      .then((res) => {
+        res = res.data;
+        console.log(res);
+        if (res?.error)
+          return Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: res?.error,
+          });
+        if (res?.success) {
+          navigate("/login");
+          return Swal.fire({
+            icon: "success",
+            title: "Successfully",
+            text: res?.success,
+          });
+        }
+      });
   };
   const handleChange = (e) => {
     setFormData((prev) => ({

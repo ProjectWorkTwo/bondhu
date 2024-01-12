@@ -1,15 +1,47 @@
-import React from "react";
+import React, { useRef } from "react";
 import ProfilePic from "./ProfilePic";
 import { FaCamera } from "react-icons/fa";
 import ProfileInfoContainer from "../Group/ProfileInfoContainer";
+import { imgbbBaseURL } from "../../../Constant/Constant";
+import axios from "axios";
 
 const ProfileTopInfo = () => {
+  const profileImgRef = useRef(null);
+  const handleChangeProfileImg = (e) => {
+    axios
+      .post(
+        `${imgbbBaseURL}?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+        { image: profileImgRef?.current?.files[0] },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        // if (!email) return;
+        console.log(res?.data?.data?.url);
+      })
+      .catch((error) =>
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error?.response?.data?.message || error.message,
+        })
+      );
+  };
   return (
     <ProfileInfoContainer>
       <div className="-mt-[100px] relative">
         <ProfilePic />
-        <form>
-          <input type="file" name="profilePic" id="profilePic" hidden />
+        <form onChange={handleChangeProfileImg}>
+          <input
+            type="file"
+            name="profilePic"
+            id="profilePic"
+            hidden
+            ref={profileImgRef}
+          />
           <label
             htmlFor="profilePic"
             className="size-10 rounded-full border-4 border-primaryColor grid place-items-center absolute bottom-0 right-0 -translate-x-1/4 -translate-y-1/4 bg-whiteColor hover:bg-primaryColor text-primaryColor hover:text-whiteColor cursor-pointer"

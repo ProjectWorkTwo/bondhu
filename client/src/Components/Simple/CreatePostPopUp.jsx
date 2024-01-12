@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import ScrollBar from "./ScrollBar";
 import hidePopUp from "../CustomFunction/hidePopUp";
+import { baseURL, imgbbBaseURL } from "../../Constant/Constant";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const CreatePostPopUp = ({ setStatus, privacy = true }) => {
+  const postImgRef = useRef(null);
   const [postData, setPostData] = useState({
     heading: "",
-    postImg: "",
     postMessage: "",
     postPrivacy: "public",
   });
@@ -17,8 +20,54 @@ const CreatePostPopUp = ({ setStatus, privacy = true }) => {
     }));
   };
   const handleSubmit = (e) => {
+    console.log(import.meta.env.VITE_IMGBB_API_KEY);
     e.preventDefault();
     console.log(postData);
+    // Swal.fire({
+    //   title: "Good job!",
+    //   text: "You clicked the button!",
+    //   icon: "success",
+    // });
+
+    if (
+      !postData["heading"] ||
+      !postData["postMessage"] ||
+      !postData["postPrivacy"] ||
+      !postImgRef?.current?.files[0]
+    ) {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+    }
+
+    axios
+      .post(
+        `${imgbbBaseURL}?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+        { image: postImgRef?.current?.files[0] },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        // if (!email) return;
+        const createPostData = {
+          ...postData,
+          postImg: res?.data?.data?.url,
+        };
+        console.log(createPostData);
+      })
+      .catch((error) =>
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error?.response?.data?.message || error.message,
+        })
+      );
   };
   return (
     <section
@@ -49,8 +98,7 @@ const CreatePostPopUp = ({ setStatus, privacy = true }) => {
                 type="file"
                 name="postImg"
                 id="postImg"
-                value={postData["postImg"]}
-                onChange={handleChange}
+                ref={postImgRef}
                 hidden
               />
               <label htmlFor="postImg" className="btnFill1">

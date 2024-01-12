@@ -3,6 +3,9 @@ export const secondaryColor = "#31572C";
 export const grayColor = "#464646";
 export const whiteColor = "#ffffff";
 
+export const baseURL = "http://localhost:5000";
+export const imgbbBaseURL = "https://api.imgbb.com/1/upload";
+
 export const months = [
   "Jan",
   "Feb",
