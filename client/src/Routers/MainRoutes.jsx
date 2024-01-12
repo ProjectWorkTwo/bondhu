@@ -40,15 +40,15 @@ const MainRoutes = () => {
           path: "/post/:id",
           element: <SinglePost />,
         },
-        {
-          path: "/login",
-          element: <LoginPage />,
-        },
-        {
-          path: "/signup",
-          element: <SignUpPage />,
-        },
       ],
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/signup",
+      element: <SignUpPage />,
     },
   ]);
 

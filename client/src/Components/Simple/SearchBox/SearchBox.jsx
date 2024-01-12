@@ -46,10 +46,12 @@ const SearchBox = ({ setSearchResult }) => {
     }));
   };
   useEffect(() => {
-    document?.addEventListener("click", (e) => {
+    const handleClickEvent = (e) => {
       if (!searchCategoryRef?.current?.contains(e?.target))
         setSearchTypePopUpState((prev) => false);
-    });
+    };
+    document?.addEventListener("click", handleClickEvent);
+    return () => handleClickEvent("click", handleClickEvent);
   }, []);
   return (
     <div className="p-4 shadow-xl rounded-md">

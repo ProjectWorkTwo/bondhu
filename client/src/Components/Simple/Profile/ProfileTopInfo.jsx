@@ -1,10 +1,11 @@
 import React from "react";
 import ProfilePic from "./ProfilePic";
 import { FaCamera } from "react-icons/fa";
+import ProfileInfoContainer from "../Group/ProfileInfoContainer";
 
 const ProfileTopInfo = () => {
   return (
-    <div className="w-[90%] max-w-[440px] mx-auto bg-whiteColor rounded-md shadow-lg -mt-28 relative z-10 flex flex-col justify-center items-center px-4 pb-4 border">
+    <ProfileInfoContainer>
       <div className="-mt-[100px] relative">
         <ProfilePic />
         <form>
@@ -17,16 +18,16 @@ const ProfileTopInfo = () => {
           </label>
         </form>
       </div>
-      <div className="p-4 flex flex-col justify-center items-center gap-2">
+      <div className="w-full p-4 flex flex-col justify-center items-center gap-2">
         <h1 className="text-center capitalize">Full Name</h1>
-        <span className="btnFill1">userName</span>
+        <span className="btnFill1 w-auto">userName</span>
         <p className="text-center text-grayColor text-sm leading-normal">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus
           ipsum quis ligula vulputate, at auctor orci ullamcorper.
         </p>
-        <button className="btnFill1">Send Friend Request</button>
+        <button className="btnFill1 w-auto">Send Friend Request</button>
       </div>
-    </div>
+    </ProfileInfoContainer>
   );
 };
 

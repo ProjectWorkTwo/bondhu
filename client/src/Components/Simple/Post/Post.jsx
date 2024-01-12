@@ -8,7 +8,7 @@ import PostShareMember from "./PostShareMember";
 import PostImgDetails from "./PostImgDetails";
 import UpdatePostPopUp from "./UpdatePostPopUp";
 
-const Post = ({ fullScreen = false }) => {
+const Post = ({ fullScreen = false, groupPost, pagePost }) => {
   const [reactorBoxStatus, setReactorBoxStatus] = useState(false);
   const [commentBoxStatus, setCommentBoxStatus] = useState(false);
   const [shareMemberBoxStatus, setShareMember] = useState(false);
@@ -16,7 +16,11 @@ const Post = ({ fullScreen = false }) => {
   const [updateStatus, setUpdateStatus] = useState(false);
   return (
     <div className="w-full p-4 flex flex-col gap-2 rounded-md shadow-lg border border-opacity-50">
-      <PostTop setUpdateStatus={setUpdateStatus} />
+      <PostTop
+        setUpdateStatus={setUpdateStatus}
+        groupPost={groupPost}
+        pagePost={pagePost}
+      />
       <PostContent setPostImgDetailsStatus={setPostImgDetailsStatus} />
       <PostReaction
         setReactorBoxStatus={setReactorBoxStatus}
