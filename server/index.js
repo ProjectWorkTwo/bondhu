@@ -89,6 +89,29 @@ async function run() {
       }
       res.send({success: "user found", ...userData});
     });
+
+    app.put("/updateuser/:id",findUser, async (req, res) => {
+      //! user should be veriied
+
+      const id = req.params.id;
+      const query = { _id: new Object(id) };
+      const userData = await userCollection.findOne(query);
+
+      if (req.result.email!==userData.email) {
+        return res.send({ error: "bad request" });
+      }
+
+      const options = { upsert: false };
+      const updateUser = req.body;
+
+      const setUser = {
+        $set: {
+          ...updateUser,
+        },
+      };
+      const result = await userCollection.updateOne(query, setUser, options);
+      res.send(result);
+    });
     
 
     /**
