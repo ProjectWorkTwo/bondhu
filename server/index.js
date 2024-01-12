@@ -34,13 +34,34 @@ async function run() {
   try {
     await client.connect();
     const userCollection = client.db("bondhuDB").collection("users");
+    const postCollection = client.db("bondhuDB").collection("posts");
+
+
+    /*
+     ** User verification methods
+     * start
+     */
+     const findUser = async (req, res, next) => {
+      const email = req.body.email;
+      const query = { email: email };
+      const result = await userCollection.findOne(query);
+      req.result = result;
+
+      next();
+    };
+
+    /*
+     ** User verification methods
+     * ends here
+     */
+
 
     app.get('/', async(req, res) => {
       res.send("Sweet Home");
     });
 
     /**
-     * ! Methods for user 
+     * ! Methods for user
     **/
     app.post('/createuser', async(req, res) => {
       const user = req.body;
@@ -56,7 +77,7 @@ async function run() {
       res.send(result);
     });
 
-    app.post('/getuser', async(req, res) => {
+    app.get('/getuser', async(req, res) => {
       const user = req.body;
       const {email} = user;
       const query = {email: email};
@@ -66,9 +87,87 @@ async function run() {
         res.send({error: "user already exists"});
         return;
       }
-      res.send({success: "user found"});
+      res.send({success: "user found", ...userData});
     });
     
+
+    /**
+     * ! Methods for posts 
+    **/
+    app.post("/createpost", findUser, async (req, res) => {
+      //* user should be veriied
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const post = req.body;
+      const result = await postCollection.insertOne(post);
+      res.send(result);
+    });
+
+    app.put('/updatepost/:id', findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({error: "bad request"});
+      }
+
+      const options = { upsert: false };
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await postCollection.findOne(query);
+
+      if (req.result.email !== result.email) {
+        return res.send({error: "bad request"});
+      }
+
+      const updatePost = req.body;
+      console.log(updatePost);
+      console.log(result)
+      const setPost = {
+        $set: {
+          ...result,
+        },
+      };
+
+      const newresult = await postCollection.updateOne(query, setPost, options);
+      res.send(newresult);
+    });
+
+    app.get("/getposts", findUser, async (req, res) => {
+      const result = await postCollection
+        // .find({ status: "active" })
+        // .find({ status: "active" })
+        .sort({ _id: -1 })
+        .toArray();
+
+      res.send(result);
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
