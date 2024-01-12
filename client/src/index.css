@@ -60,7 +60,7 @@
     @apply transition-all duration-150 ease-in-out;
   }
   .popupWrapper {
-    @apply fixed top-0 left-0 z-[9999] w-full h-full bg-whiteColor/20 grid place-items-center;
+    @apply fixed top-0 left-0 z-[999] w-full h-full bg-whiteColor/20 grid place-items-center;
   }
   .floatingActionBtn1 {
     @apply fixed size-9 md:size-12 rounded-full bg-primaryColor border-primaryColor grid place-items-center text-whiteColor text-lg md:text-2xl right-2 bottom-2 cursor-pointer z-[9999];
