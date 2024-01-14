@@ -51,8 +51,9 @@ async function run() {
      * start
      */
     const findUser = async (req, res, next) => {
-      const email = req.body.email;
-      const query = { email: email };
+      const email = req.headers?.email;
+      const password = req.headers?.password;
+      const query = { email, password };
       const result = await userCollection.findOne(query);
       req.result = result;
 
@@ -161,7 +162,7 @@ async function run() {
       res.send(newresult);
     });
 
-    app.get("/getposts", findUser, async (req, res) => {
+    app.get("/getposts", async (req, res) => {
       const result = await postCollection
         // .find({ status: "active" })
         // .find({ status: "active" })
@@ -183,7 +184,64 @@ async function run() {
      * * Check it and update where needed
      **/
 
-    
+    app.post('/creategroup', findUser, async(req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const groupName = req.body.groupName;
+      const findGroup = await groupsCollection.findOne({groupName: groupName});
+
+      if(findGroup) {
+        return res.send({error: "Group already exist"});
+      }
+
+      // const email = req.body.email;
+      // const query = { email: email };
+
+      const post = req.body;
+      const creationResult = await groupsCollection.insertOne(post);
+
+      const adminResult = await  groupMemberCollection.insertOne({
+        groupName: post.groupName,
+        email: post.email,
+        status: "admin"
+      });
+      
+      res.send({creationResult, adminResult});
+      
+    });
+
+// /group/group name
+    app.put("/updategroup/:groupName", findUser, async (req, res) => {        // ! on editing
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const options = { upsert: false };
+      const groupName = req.params.groupName;
+      const query = { groupName };
+      const result = await groupCollection.findOne(query);
+
+
+      if (req.result.email !== result.authorEmail) {
+        return res.send({ error: "bad request" });
+      }
+
+      const updateGroup = req.body;
+      // console.log(updateGroup);
+      // console.log(result);
+      const setGroup = {
+        $set: {
+          ...updateGroup,
+        },
+      };
+
+      const newresult = await groupCollection.updateOne(query, setGroup, options);
+      res.send(newresult);
+    });
+
+
 
 
 
