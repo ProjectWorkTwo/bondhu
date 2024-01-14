@@ -50,8 +50,9 @@ async function run() {
      * start
      */
     const findUser = async (req, res, next) => {
-      const email = req.body.email;
-      const query = { email: email };
+      const email = req.headers?.email;
+      const password = req.headers?.password;
+      const query = { email, password };
       const result = await userCollection.findOne(query);
       req.result = result;
 
@@ -167,7 +168,7 @@ async function run() {
       res.send(newresult);
     });
 
-    app.get("/getposts", findUser, async (req, res) => {
+    app.get("/getposts", async (req, res) => {
       const result = await postCollection
         // .find({ status: "active" })
         // .find({ status: "active" })
@@ -182,16 +183,241 @@ async function run() {
      * * Check it and update where needed
      **/
 
+<<<<<<< HEAD
+=======
+    app.post('/creategrouppost', findUser, async(req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const groupName = req.body.groupName;
+      const findGroup = await groupsCollection.findOne({groupName: groupName});
+
+      if(findGroup) {
+        return res.send({error: "Group already exist"});
+      }
+
+      // const email = req.body.email;
+      // const query = { email: email };
+
+      const post = req.body;
+      const creationResult = await groupPostCollection.insertOne(post);
+
+      const adminResult = await  groupMemberCollection.insertOne({
+        groupName: post.groupName,
+        email: post.email,
+        status: "admin"
+      });
+      
+      res.send({creationResult, adminResult});
+      
+    });
+
+
+
+>>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     /**
      * ! Methods for Groups
      * * Check it and update where needed
      **/
 
+<<<<<<< HEAD
+=======
+    app.post('/creategroup', findUser, async(req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const groupName = req.body.groupName;
+      const findGroup = await groupsCollection.findOne({groupName: groupName});
+
+      if(findGroup) {
+        return res.send({error: "Group already exist"});
+      }
+
+      // const email = req.body.email;
+      // const query = { email: email };
+
+      const post = req.body;
+      const creationResult = await groupsCollection.insertOne(post);
+
+      const adminResult = await  groupMemberCollection.insertOne({
+        groupName: post.groupName,
+        email: post.email,
+        status: "admin"
+      });
+      
+      res.send({creationResult, adminResult});
+      
+    });
+
+    // /group/group_name
+    app.put("/updategroup/:groupName", findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const options = { upsert: false };
+      const groupName = req.params.groupName;
+      const query = { groupName };
+      const result = await groupsCollection.findOne(query);
+
+
+      if (req.result.email !== result.authorEmail) {
+        return res.send({ error: "bad request" });
+      }
+
+      const updateGroup = req.body;
+      // console.log(updateGroup);
+      // console.log(result);
+      const setGroup = {
+        $set: {
+          ...updateGroup,
+        },
+      };
+
+      const newresult = await groupsCollection.updateOne(query, setGroup, options);
+      res.send(newresult);
+    });
+
+    app.get('/getgroup/:groupName', async (req, res) => {
+      const result = await groupsCollection.findOne({groupName: req.params.groupName});
+      return res.send(result);
+    });
+
+    app.get("/getjoinedgroups", findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+      
+      const result = await groupMemberCollection
+        .find({email: req.result?.email})
+        .sort({ _id: -1 })
+        .toArray();
+      
+
+      res.send(result);
+    });
+
+
+    app.get("/getmygroups", findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const result = await groupsCollection
+        .find({email: req.result?.email})
+        .sort({ _id: -1 })
+        .toArray();
+      
+
+      res.send(result);
+    });
+
+    app.get("/getallgroups", async (req, res) => {
+      const result = await groupsCollection
+        .sort({ _id: -1 })
+        .toArray();
+
+      res.send(result);
+    });
+
+    
+
+
+
+>>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     /**
      * ! Methods for Group Members
      * * Check it and update where needed
      **/
 
+<<<<<<< HEAD
+=======
+    app.post("/addgroupmember", findUser, async (req, res) => {
+      const result = groupMemberCollection.insertOne({
+        groupName: req.headers.groupName,
+        email: req.headers.email,
+        status: "member"
+      });
+
+      return res.send(result);
+    });
+
+    app.get("/getgroupmembers/:groupName", async (req, res) => {
+      const result = groupMemberCollection
+        .find({groupName: req.params.groupName})
+        .toArray()
+      
+      return res.send(result);
+    });
+
+
+    app.get("/verifygroupauthor", findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const result = await groupMemberCollection.findOne({
+        groupName: req.headers.groupName,
+        email: req.headers.email
+      });
+
+      if(!result) return res.send({data: false});
+      if(result?.status==="admin") return res.send({data: true});
+      return res.send({data: false});   
+    });
+
+    app.get("/verifygroupmember", findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const result = await groupMemberCollection.findOne({
+        groupName: req.headers.groupName,
+        email: req.headers.email
+      });
+
+      if(!result) return res.send({data: false});
+      if(result?.status==="member") return res.send({data: true});
+      return res.send({data: false});   
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     app.listen(port, () => {
       console.log(`server is running at http://localhost:${port}`);
     });
