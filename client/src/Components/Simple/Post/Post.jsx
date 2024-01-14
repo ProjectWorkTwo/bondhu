@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import PostTop from "./PostTop";
 import PostComment from "./PostComment";
 import PostContent from "./PostContent";

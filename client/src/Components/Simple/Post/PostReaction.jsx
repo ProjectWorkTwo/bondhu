@@ -1,15 +1,31 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { IoMdHeart } from "react-icons/io";
 import { MdGroup, MdModeComment } from "react-icons/md";
 import { FaShare } from "react-icons/fa";
 import { RiGitRepositoryPrivateFill } from "react-icons/ri";
 import { MdOutlinePublic } from "react-icons/md";
+import { UnAuthorizeContext } from "../../../Providers/UnAuthorizeProvider";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const PostReaction = ({
   setReactorBoxStatus,
   setCommentBoxStatus,
   setShareMember,
 }) => {
+  const {
+    unAuthorizeState,
+    setUnAuthorizeState,
+    showUnAuthorizeState,
+    hideUnAuthorizeState,
+  } = useContext(UnAuthorizeContext);
+  const { authenticationState, setAuthenticationState, handleLogOut } =
+    useContext(AuthContext);
   const [shareMethodState, setShareMethodState] = useState(false);
   const shareComponentRef = useRef(null);
   const shareMethodRef = useRef(null);
@@ -51,32 +67,46 @@ const PostReaction = ({
       handleClick: handleShareGroup,
     },
   ];
-
+  const handleReactionState = (type) => {
+    if (!authenticationState) return showUnAuthorizeState();
+    switch (type) {
+      case "likes":
+        setReactorBoxStatus((prev) => true);
+        break;
+      case "comments":
+        setCommentBoxStatus((prev) => !prev);
+        break;
+      case "shares":
+        setShareMember((prev) => true);
+        break;
+    }
+  };
   return (
     <div className="w-full flex flex-col justify-center items-center gap-2">
       <div className="w-full grid grid-cols-3 place-items-center text-center gap-3 underline text-xs sm:text-sm px-3 text-secondaryColor cursor-pointer select-none">
-        <span onClick={() => setReactorBoxStatus((prev) => true)}>
-          55k likes
-        </span>
-        <span onClick={() => setCommentBoxStatus((prev) => !prev)}>
+        <span onClick={() => handleReactionState("likes")}>55k likes</span>
+        <span onClick={() => handleReactionState("comments")}>
           55k comments
         </span>
-        <span onClick={() => setShareMember((prev) => true)}>55k shares</span>
+        <span onClick={() => handleReactionState("shares")}>55k shares</span>
       </div>
       <div className="w-full grid grid-cols-3 gap-3">
-        <div className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-xl md:text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim">
+        <div
+          className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-xl md:text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim"
+          onClick={() => handleReactionState("likes")}
+        >
           <IoMdHeart />
         </div>
         <div
           className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-xl md:text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim"
-          onClick={() => setCommentBoxStatus((prev) => !prev)}
+          onClick={() => handleReactionState("comments")}
         >
           <MdModeComment />
         </div>
         <div className="relative" ref={shareComponentRef}>
           <div
             className="w-full shadow-2xl border px-3 py-2 text-primaryColor rounded-md cursor-pointer grid place-items-center text-xl md:text-2xl hover:bg-primaryColor hover:text-whiteColor hover:border-primaryColor hover:scale-90 commonAnim"
-            onClick={() => setShareMethodState((prev) => !prev)}
+            onClick={() => handleReactionState("shares")}
             ref={shareIconRef}
           >
             <FaShare />

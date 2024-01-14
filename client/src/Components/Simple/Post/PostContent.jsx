@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { HiMiniViewfinderCircle } from "react-icons/hi2";
 import { BsTranslate } from "react-icons/bs";
 import axios from "axios";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import UnAuthorizePopup from "../UnAuthorizePopup";
+import { UnAuthorizeContext } from "../../../Providers/UnAuthorizeProvider";
 
 const postImg =
   "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1530&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const PostContent = ({ setPostImgDetailsStatus }) => {
+  const { authenticationState, setAuthenticationState, handleLogOut } =
+    useContext(AuthContext);
+  const {
+    unAuthorizeState,
+    setUnAuthorizeState,
+    showUnAuthorizeState,
+    hideUnAuthorizeState,
+  } = useContext(UnAuthorizeContext);
   const [postTitle, setPostTitle] = useState(
     `Your computer is not your computer anymore 😆`
   );
@@ -27,6 +38,7 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
     return translatedData[0].reduce((acc, curr) => acc + curr[0], "");
   };
   const handleTranslationState = async () => {
+    if (!authenticationState) return showUnAuthorizeState();
     if (!translationState) {
       setLoadingState((prev) => true);
       const updatedTitle = await translateText(postTitle);
@@ -37,8 +49,14 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
     }
     setTranslationState((prev) => !prev);
   };
+
+  const handlePostImgPreview = () => {
+    if (!authenticationState) return showUnAuthorizeState();
+    setPostImgDetailsStatus((prev) => true);
+  };
   return (
     <div className="w-full flex flex-col gap-3">
+      <UnAuthorizePopup />
       <div className="w-full flex flex-col gap-2">
         <h2 className="text-secondaryColor text-lg md:text-2xl">{postTitle}</h2>
         <p className="text-sm text-grayColor leading-normal">{postContent}</p>
@@ -69,7 +87,7 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
         <img src={postImg} alt="" className="w-auto h-auto" />
         <div
           className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 translate-y-20 group-hover:translate-y-0 grid place-items-center bg-whiteColor/50 text-4xl cursor-pointer commonAnim"
-          onClick={() => setPostImgDetailsStatus((prev) => true)}
+          onClick={handlePostImgPreview}
         >
           <span className="w-14 h-14 rounded-full grid place-items-center bg-primaryColor text-whiteColor">
             <HiMiniViewfinderCircle />

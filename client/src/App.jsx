@@ -9,6 +9,7 @@ import SearchPopUp from "./Sidebars/SearchPopUp";
 import { ProfilePopUpContext } from "./Providers/ProfilePopUpProvider";
 import { CreateGroupPageFormContext } from "./Providers/CreateGroupPageFormProvider";
 import CreateGroupPageForm from "./Components/Simple/CreateGroupPageForm";
+import { UnAuthorizeContext } from "./Providers/UnAuthorizeProvider";
 
 const App = () => {
   const {
@@ -30,15 +31,19 @@ const App = () => {
       <section className="w-full flex justify-center items-center mt-[60px] px-4">
         <Outlet />
       </section>
-      <OwnProfile />
-      <OtherProfile
-        profileState={otherProfileState}
-        setProfileState={setOtherProfileState}
-      />
-      <SearchPopUp
-        searchPopUpState={searchPopUpState}
-        setSearchPopUpState={setSearchPopUpState}
-      />
+      {localStorage.getItem("authorData") && (
+        <>
+          <OwnProfile />
+          <OtherProfile
+            profileState={otherProfileState}
+            setProfileState={setOtherProfileState}
+          />
+          <SearchPopUp
+            searchPopUpState={searchPopUpState}
+            setSearchPopUpState={setSearchPopUpState}
+          />
+        </>
+      )}
       {autorizePopUpState && (
         <UnAuthorizePopup setStatus={setAutorizePopUpState} />
       )}

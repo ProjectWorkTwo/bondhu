@@ -37,14 +37,13 @@ async function run() {
   try {
     await client.connect();
 
-
     const userCollection = client.db("bondhuDB").collection("users");
     const postCollection = client.db("bondhuDB").collection("posts");
-    const groupsCollection = client.db("bondhuDB").collection("groups");   //? Collection of groups
-    const groupPostCollection = client.db("bondhuDB").collection("groupposts");  //? Collection for group posts
-    const groupMemberCollection = client.db("bondhuDB").collection("groupmember");  //? Collection for Group Members
-
-
+    const groupsCollection = client.db("bondhuDB").collection("groups"); //? Collection of groups
+    const groupPostCollection = client.db("bondhuDB").collection("groupposts"); //? Collection for group posts
+    const groupMemberCollection = client
+      .db("bondhuDB")
+      .collection("groupmember"); //? Collection for Group Members
 
     /*
      ** User verification methods
@@ -83,6 +82,13 @@ async function run() {
       }
       const result = await userCollection.insertOne(user);
       res.send({ success: "Account created successfully!" });
+    });
+
+    app.post("/userVarify", async (req, res) => {
+      const { email, password } = req.body;
+      const userData = await userCollection.findOne({ email, password });
+      
+      return res.send(userData);
     });
 
     app.get("/getuser", async (req, res) => {
@@ -176,55 +182,15 @@ async function run() {
      * * Check it and update where needed
      **/
 
-
-
     /**
      * ! Methods for Groups
      * * Check it and update where needed
      **/
 
-    
-
-
-
     /**
      * ! Methods for Group Members
      * * Check it and update where needed
      **/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     app.listen(port, () => {
       console.log(`server is running at http://localhost:${port}`);

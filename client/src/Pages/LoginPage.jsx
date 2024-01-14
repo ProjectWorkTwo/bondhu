@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "./Login.css";
@@ -8,10 +8,13 @@ import LoginSignUpSlider from "../Components/Simple/LoginSIgnUpSlider";
 import axios from "axios";
 import { baseURL } from "../Constant/Constant";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [showHideState, setShowHideState] = useState(false);
+  const { authenticationState, setAuthenticationState, handleLogOut } =
+    useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,10 +30,11 @@ const LoginPage = () => {
     console.log(formData);
 
     axios
-      .get(`${baseURL}/getuser`, {
-        headers: formData,
+      .post(`${baseURL}/userVarify`, {
+        ...formData,
       })
       .then((res) => {
+        console.log(res);
         const data = res?.data;
         if (data?.error) {
           return Swal.fire({
@@ -47,6 +51,9 @@ const LoginPage = () => {
               email,
               password,
             })
+          );
+          setAuthenticationState((prev) =>
+            Boolean(localStorage.getItem("authorData"))
           );
           return Swal.fire({
             icon: "success",
