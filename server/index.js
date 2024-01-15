@@ -37,13 +37,14 @@ async function run() {
   try {
     await client.connect();
 
+
     const userCollection = client.db("bondhuDB").collection("users");
     const postCollection = client.db("bondhuDB").collection("posts");
-    const groupsCollection = client.db("bondhuDB").collection("groups"); //? Collection of groups
-    const groupPostCollection = client.db("bondhuDB").collection("groupposts"); //? Collection for group posts
-    const groupMemberCollection = client
-      .db("bondhuDB")
-      .collection("groupmember"); //? Collection for Group Members
+    const groupsCollection = client.db("bondhuDB").collection("groups");   //? Collection of groups
+    const groupPostCollection = client.db("bondhuDB").collection("groupposts");  //? Collection for group posts
+    const groupMemberCollection = client.db("bondhuDB").collection("groupmember");  //? Collection for Group Members
+
+
 
     /*
      ** User verification methods
