@@ -9,7 +9,12 @@ import { UnAuthorizeContext } from "../../../Providers/UnAuthorizeProvider";
 const postImg =
   "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1530&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-const PostContent = ({ setPostImgDetailsStatus }) => {
+const PostContent = ({
+  setPostImgDetailsStatus,
+  heading = "",
+  postMessage = "",
+  postImg = "",
+}) => {
   const { authenticationState, setAuthenticationState, handleLogOut } =
     useContext(AuthContext);
   const {
@@ -18,12 +23,8 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
     showUnAuthorizeState,
     hideUnAuthorizeState,
   } = useContext(UnAuthorizeContext);
-  const [postTitle, setPostTitle] = useState(
-    `Your computer is not your computer anymore 😆`
-  );
-  const [postContent, setPostContent] = useState(
-    `I am Abdus Shohid Shakil, a programmer and front-end developer with a deep passion for web technology. Currently studying Computer Science and Engineering (CSE) in Bangladesh, I have accumulated approximately two years of coding experience, with a specific focus on web development for the past year`
-  );
+  const [postTitle, setPostTitle] = useState(heading);
+  const [postContent, setPostContent] = useState(postMessage);
   const [translationState, setTranslationState] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
   const [translatedTitle, setTranslatedTitle] = useState("");
@@ -58,8 +59,14 @@ const PostContent = ({ setPostImgDetailsStatus }) => {
     <div className="w-full flex flex-col gap-3">
       <UnAuthorizePopup />
       <div className="w-full flex flex-col gap-2">
-        <h2 className="text-secondaryColor text-lg md:text-2xl">{postTitle}</h2>
-        <p className="text-sm text-grayColor leading-normal">{postContent}</p>
+        {heading && (
+          <h2 className="text-secondaryColor text-lg md:text-2xl">
+            {postTitle}
+          </h2>
+        )}
+        {postMessage && (
+          <p className="text-sm text-grayColor leading-normal">{postContent}</p>
+        )}
         <div className="flex justify-start items-center gap-4">
           <span
             className="px-3 py-1 rounded-full bg-primaryColor text-whiteColor text-base cursor-pointer flex gap-4 justify-center items-center w-fit select-none"

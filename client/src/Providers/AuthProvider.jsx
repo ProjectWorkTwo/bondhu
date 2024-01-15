@@ -14,9 +14,6 @@ const AuthProvider = ({ children }) => {
       Boolean(localStorage.removeItem("authorData"))
     );
   };
-
-  console.log("======================");
-  console.log(authenticationState);
   const values = {
     authenticationState,
     setAuthenticationState,

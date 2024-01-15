@@ -3,7 +3,7 @@ import { baseURL } from "../Constant/Constant";
 import axios from "axios";
 
 const useGetPost = (id) => {
-  console.log(id);
+  if (!id) return;
   const {
     data: dataPost,
     isLoading: isLoadingPost,
@@ -12,10 +12,13 @@ const useGetPost = (id) => {
     queryKey: ["post", id],
     queryFn: () =>
       axios
-        .get(`${baseURL}/getgroupposts/${id}`, {
+        .get(`${baseURL}/getgroupsinglepost/${id}`, {
           headers: JSON.parse(localStorage.getItem("authorData") || {}),
         })
-        .then((res) => res.data),
+        .then((res) => {
+          console.log(res?.data);
+          res?.data;
+        }),
   });
 
   return {

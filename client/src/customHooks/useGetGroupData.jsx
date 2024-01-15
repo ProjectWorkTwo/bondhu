@@ -68,7 +68,10 @@ const useGetGroupPost = (groupName) => {
         .get(`${baseURL}/getgroupposts/${groupName}`, {
           headers: JSON.parse(localStorage.getItem("authorData") || {}),
         })
-        .then((res) => res.data),
+        .then((res) => {
+          console.log(res);
+          res.data;
+        }),
   });
 
   return {
