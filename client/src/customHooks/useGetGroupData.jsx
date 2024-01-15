@@ -52,5 +52,30 @@ const useGetGroupMembers = (groupName) => {
     refetchGroupMembers,
   };
 };
+const useGetGroupPost = (groupName) => {
+  if (groupName.includes(" ")) {
+    groupName = groupName.split(" ").join("-");
+  }
 
-export { useGetGroupInfo, useGetGroupMembers };
+  const {
+    data: dataGroupPosts,
+    isLoading: isLoadingGroupPosts,
+    refetch: refetchGroupPosts,
+  } = useQuery({
+    queryKey: ["groupposts", groupName],
+    queryFn: () =>
+      axios
+        .get(`${baseURL}/getgroupposts/${groupName}`, {
+          headers: JSON.parse(localStorage.getItem("authorData") || {}),
+        })
+        .then((res) => res.data),
+  });
+
+  return {
+    dataGroupPosts,
+    isLoadingGroupPosts,
+    refetchGroupPosts,
+  };
+};
+
+export { useGetGroupInfo, useGetGroupMembers, useGetGroupPost };
