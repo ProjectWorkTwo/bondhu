@@ -265,7 +265,7 @@ async function run() {
 
     app.get("/getgroupposts/:groupName", async (req, res) => {
       const result = await groupPostCollection
-        .findOne( {groupName: req.params.groupName} )
+        .find( {groupName: req.params.groupName} )
         .sort({ _id: -1 })
         .toArray();
 
@@ -273,9 +273,7 @@ async function run() {
     });
 
     app.get("/getgroupposts/:id", async (req, res) => {
-      const result = await groupPostCollection
-        .findOne( {_id: new ObjectId(req.params?.id)} )
-        .toArray();
+      const result = await groupPostCollection.findOne( {_id: new ObjectId(req.params?.id)} )
 
       res.send(result);
     });
