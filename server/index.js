@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
@@ -159,11 +159,11 @@ async function run() {
       }
 
       const updatePost = req.body;
-      console.log(updatePost);
-      console.log(result);
+      // console.log(updatePost);
+      // console.log(result);
       const setPost = {
         $set: {
-          ...result,
+          ...updatePost,
         },
       };
 
@@ -174,7 +174,17 @@ async function run() {
     app.get("/getposts", async (req, res) => {
       const result = await postCollection
         // .find({ status: "active" })
+        .find()
+        .sort({ _id: -1 })
+        .toArray();
+
+      res.send(result);
+    });
+
+    app.get("/getposts/:id", async (req, res) => {
+      const result = await postCollection
         // .find({ status: "active" })
+        .findOne({_id: new ObjectId(req.params?.id)  })
         .sort({ _id: -1 })
         .toArray();
 
@@ -213,6 +223,53 @@ async function run() {
       
       res.send({creationResult, adminResult});
       
+    });
+
+
+    app.put("/updategrouppost/:id", findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const options = { upsert: false };
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await groupPostCollection.findOne(query);
+
+      if (req.result.email !== result.email) {
+        return res.send({ error: "bad request" });
+      }
+
+      const updatePost = req.body;
+      // console.log(updatePost);
+      // console.log(result);
+      const setPost = {
+        $set: {
+          ...updatePost,
+        },
+      };
+
+      const newresult = await groupPostCollection.updateOne(query, setPost, options);
+      res.send(newresult);
+    });
+
+
+    app.get("/getgroupposts", async (req, res) => {
+      const result = await groupPostCollection
+        .find()
+        .sort({ _id: -1 })
+        .toArray();
+
+      res.send(result);
+    });
+
+    app.get("/getgroupposts/:id", async (req, res) => {
+      const result = await groupPostCollection
+        .findOne( {_id: new ObjectId(req.params?.id)} )
+        .sort({ _id: -1 })
+        .toArray();
+
+      res.send(result);
     });
 
 
@@ -320,7 +377,6 @@ async function run() {
 
       res.send(result);
     });
-
     
 
 
@@ -332,7 +388,7 @@ async function run() {
 
 
     app.post("/addgroupmember", findUser, async (req, res) => {
-      const result = groupMemberCollection.insertOne({
+      const result = await groupMemberCollection.insertOne({
         groupName: req.headers.groupName,
         email: req.headers.email,
         status: "member"
@@ -342,7 +398,7 @@ async function run() {
     });
 
     app.get("/getgroupmembers/:groupName", async (req, res) => {
-      const result = groupMemberCollection
+      const result = await groupMemberCollection
         .find({groupName: req.params.groupName})
         .toArray()
       
@@ -379,6 +435,42 @@ async function run() {
       if(result?.status==="member") return res.send({data: true});
       return res.send({data: false});   
     });
+
+    app.delete("/leavegroupmember", findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const result = await groupMemberCollection.findOne({
+        groupName: req.headers.groupName,
+        email: req.headers.email
+      });
+
+      if(!result) return res.send({ error: "bad request" });
+      if(result?.status==="member") {
+        const deleteResult = await groupMemberCollection.deleteOne({result});
+        return res.send(deleteResult);
+      }
+      return res.send( {error: "Admin can't leave"} );
+    });
+
+    app.delete("/deletegroup", findUser, async (req, res) => {
+      if (!req.result) {
+        return res.send({ error: "bad request" });
+      }
+
+      const result = await groupMemberCollection.findOne({
+        groupName: req.headers.groupName,
+        email: req.headers.email
+      });
+
+      if(!result || result?.status==="member") return res.send({ error: "bad request" });
+      
+      const deleteGroupResult = await groupsCollection.deleteOne( {groupName: result.groupName} );
+      const deleteMembersResult = await groupsCollection.deleteMany( {groupName: result.groupName} );
+
+      return res.send( {deleteGroupResult, deleteMembersResult} );
+    }); 
 
 
 
