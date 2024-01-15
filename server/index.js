@@ -183,8 +183,7 @@ async function run() {
      * * Check it and update where needed
      **/
 
-<<<<<<< HEAD
-=======
+
     app.post('/creategrouppost', findUser, async(req, res) => {
       if (!req.result) {
         return res.send({ error: "bad request" });
@@ -215,14 +214,11 @@ async function run() {
 
 
 
->>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     /**
      * ! Methods for Groups
      * * Check it and update where needed
      **/
 
-<<<<<<< HEAD
-=======
     app.post('/creategroup', findUser, async(req, res) => {
       if (!req.result) {
         return res.send({ error: "bad request" });
@@ -326,14 +322,12 @@ async function run() {
 
 
 
->>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     /**
      * ! Methods for Group Members
      * * Check it and update where needed
      **/
 
-<<<<<<< HEAD
-=======
+
     app.post("/addgroupmember", findUser, async (req, res) => {
       const result = groupMemberCollection.insertOne({
         groupName: req.headers.groupName,
@@ -416,8 +410,6 @@ async function run() {
 
 
 
-
->>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     app.listen(port, () => {
       console.log(`server is running at http://localhost:${port}`);
     });
