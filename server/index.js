@@ -209,19 +209,11 @@ async function run() {
         return res.send({error: "Group not exist"});
       }
 
-      // const email = req.body.email;
-      // const query = { email: email };
 
       const post = req.body;
       const creationResult = await groupPostCollection.insertOne(post);
-
-      const adminResult = await  groupMemberCollection.insertOne({
-        groupName: post.groupName,
-        email: post.email,
-        status: "admin"
-      });
       
-      res.send({creationResult, adminResult});
+      res.send({creationResult});
       
     });
 
@@ -272,12 +264,28 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/getgroupsinglepost/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const result = await groupPostCollection.findOne( query )
+    // app.get("/getgroupsinglepost/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   const query = { _id: new ObjectId(id) };
+    //   const result = await groupPostCollection.findOne( query )
 
-      res.send(result);
+    //   res.send(result);
+    // });
+    app.get("/getgroupsinglepost/:id", async (req, res) => {
+      const { id } = req.params;
+      console.log(id);
+      try {
+        await groupPostCollection.findOne({
+          _id: new ObjectId(req.params?.id),
+        });
+        const result = await groupPostCollection.findOne({
+          _id: new ObjectId(req.params?.id),
+        });
+        return res.send("Abc");
+      } catch (error) {
+        console.log(error?.message);
+        return res.send({});
+      }
     });
 
 
