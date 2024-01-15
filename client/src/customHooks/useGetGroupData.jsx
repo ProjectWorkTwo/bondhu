@@ -32,7 +32,6 @@ const useGetGroupMembers = (groupName) => {
     groupName = groupName.split(" ").join("-");
   }
 
-  console.log(`${baseURL}/getgroupmembers/${groupName}`);
   const {
     data: dataGroupMembers,
     isLoading: isLoadingGroupMembers,
