@@ -272,7 +272,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/getgroupposts/:id", async (req, res) => {
+    app.get("/getgroupsinglepost/:id", async (req, res) => {
       const result = await groupPostCollection.findOne( {_id: new ObjectId(req.params?.id)} )
 
       res.send(result);
