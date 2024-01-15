@@ -85,12 +85,14 @@ async function run() {
       res.send({ success: "Account created successfully!" });
     });
 
-    app.post("/userVarify", async (req, res) => {
-      const { email, password } = req.body;
-      const userData = await userCollection.findOne({ email, password });
+    // app.post("/userVarify", async (req, res) => {
+    //   const { email, password } = req.body;
+    //   const userData = await userCollection.findOne({ email, password });
       
-      return res.send(userData);
-    });
+    //   return res.send(userData);
+    // });
+
+    
 
     app.get("/getuser", async (req, res) => {
       const { email, password } = req.headers;
@@ -376,6 +378,7 @@ async function run() {
       if(result?.status==="member") return res.send({data: true});
       return res.send({data: false});   
     });
+
 
 
 
