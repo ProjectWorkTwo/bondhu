@@ -205,8 +205,8 @@ async function run() {
       const groupName = req.body.groupName;
       const findGroup = await groupsCollection.findOne({groupName: groupName});
 
-      if(findGroup) {
-        return res.send({error: "Group already exist"});
+      if(!findGroup) {
+        return res.send({error: "Group not exist"});
       }
 
       // const email = req.body.email;
@@ -324,8 +324,6 @@ async function run() {
       }
 
       const updateGroup = req.body;
-      // console.log(updateGroup);
-      // console.log(result);
       const setGroup = {
         $set: {
           ...updateGroup,
@@ -385,7 +383,10 @@ async function run() {
      * ! Methods for Group Members
      * * Check it and update where needed
      **/
-
+    app.get("/getgroupadmin/:groupName", findUser, async (req, res) => {
+      const result = await groupMemberCollection.findOne({groupName: req.params.groupName, status: "admin"});
+      return res.send(result);
+    });
 
     app.post("/addgroupmember", findUser, async (req, res) => {
       const result = await groupMemberCollection.insertOne({
@@ -466,10 +467,11 @@ async function run() {
 
       if(!result || result?.status==="member") return res.send({ error: "bad request" });
       
+      const deleteGroupPostResult = await groupPostCollection.deleteMany( {groupName: result.groupName} );
       const deleteGroupResult = await groupsCollection.deleteOne( {groupName: result.groupName} );
       const deleteMembersResult = await groupsCollection.deleteMany( {groupName: result.groupName} );
 
-      return res.send( {deleteGroupResult, deleteMembersResult} );
+      return res.send( {deleteGroupPostResult, deleteGroupResult, deleteMembersResult} );
     }); 
 
 
