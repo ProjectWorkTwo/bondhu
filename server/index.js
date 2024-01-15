@@ -37,13 +37,14 @@ async function run() {
   try {
     await client.connect();
 
+
     const userCollection = client.db("bondhuDB").collection("users");
     const postCollection = client.db("bondhuDB").collection("posts");
-    const groupsCollection = client.db("bondhuDB").collection("groups"); //? Collection of groups
-    const groupPostCollection = client.db("bondhuDB").collection("groupposts"); //? Collection for group posts
-    const groupMemberCollection = client
-      .db("bondhuDB")
-      .collection("groupmember"); //? Collection for Group Members
+    const groupsCollection = client.db("bondhuDB").collection("groups");   //? Collection of groups
+    const groupPostCollection = client.db("bondhuDB").collection("groupposts");  //? Collection for group posts
+    const groupMemberCollection = client.db("bondhuDB").collection("groupmember");  //? Collection for Group Members
+
+
 
     /*
      ** User verification methods
@@ -83,13 +84,6 @@ async function run() {
       }
       const result = await userCollection.insertOne(user);
       res.send({ success: "Account created successfully!" });
-    });
-
-    app.post("/userVarify", async (req, res) => {
-      const { email, password } = req.body;
-      const userData = await userCollection.findOne({ email, password });
-      
-      return res.send(userData);
     });
 
     app.get("/getuser", async (req, res) => {
@@ -183,8 +177,6 @@ async function run() {
      * * Check it and update where needed
      **/
 
-<<<<<<< HEAD
-=======
     app.post('/creategrouppost', findUser, async(req, res) => {
       if (!req.result) {
         return res.send({ error: "bad request" });
@@ -215,14 +207,11 @@ async function run() {
 
 
 
->>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     /**
      * ! Methods for Groups
      * * Check it and update where needed
      **/
 
-<<<<<<< HEAD
-=======
     app.post('/creategroup', findUser, async(req, res) => {
       if (!req.result) {
         return res.send({ error: "bad request" });
@@ -326,14 +315,11 @@ async function run() {
 
 
 
->>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     /**
      * ! Methods for Group Members
      * * Check it and update where needed
      **/
 
-<<<<<<< HEAD
-=======
     app.post("/addgroupmember", findUser, async (req, res) => {
       const result = groupMemberCollection.insertOne({
         groupName: req.headers.groupName,
@@ -417,7 +403,6 @@ async function run() {
 
 
 
->>>>>>> 9b06705d29dc13445dec0d53d136b4b6417222b3
     app.listen(port, () => {
       console.log(`server is running at http://localhost:${port}`);
     });
