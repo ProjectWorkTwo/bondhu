@@ -5,10 +5,13 @@ import { baseURL, imgbbBaseURL } from "../../Constant/Constant";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useGetGroupPost } from "../../customHooks/useGetGroupData";
 
 const CreatePostPopUp = ({ setStatus, privacy = true }) => {
   const { groupName, pageName } = useParams();
   const postImgRef = useRef(null);
+  const { dataGroupPosts, isLoadingGroupPosts, refetchGroupPosts } =
+    useGetGroupPost(groupName);
   const [postData, setPostData] = useState({
     heading: "",
     postMessage: "",
@@ -65,7 +68,7 @@ const CreatePostPopUp = ({ setStatus, privacy = true }) => {
         } else {
           url = `${baseURL}/createpost`;
         }
-        
+
         axios
           .post(
             url,
@@ -82,6 +85,9 @@ const CreatePostPopUp = ({ setStatus, privacy = true }) => {
           )
           .then((res) => {
             setStatus((prev) => false);
+
+            groupName && refetchGroupPosts();
+
             return Swal.fire({
               title: "Success",
               text: "Post created successfully!",
