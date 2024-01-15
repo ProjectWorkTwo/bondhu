@@ -319,7 +319,7 @@ async function run() {
       const result = await groupsCollection.findOne(query);
 
 
-      if (req.result.email !== result.authorEmail) {
+      if (req.result.email !== result.email) {
         return res.send({ error: "bad request" });
       }
 
