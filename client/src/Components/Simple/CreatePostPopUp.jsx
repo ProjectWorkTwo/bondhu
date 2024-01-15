@@ -20,14 +20,7 @@ const CreatePostPopUp = ({ setStatus, privacy = true }) => {
     }));
   };
   const handleSubmit = (e) => {
-    console.log(import.meta.env.VITE_IMGBB_API_KEY);
     e.preventDefault();
-    console.log(postData);
-    // Swal.fire({
-    //   title: "Good job!",
-    //   text: "You clicked the button!",
-    //   icon: "success",
-    // });
 
     if (
       !postData["heading"] ||
@@ -39,7 +32,6 @@ const CreatePostPopUp = ({ setStatus, privacy = true }) => {
         icon: "error",
         title: "Oops...",
         text: "Something went wrong!",
-        footer: '<a href="#">Why do I have this issue?</a>',
       });
     }
 
@@ -59,7 +51,27 @@ const CreatePostPopUp = ({ setStatus, privacy = true }) => {
           ...postData,
           postImg: res?.data?.data?.url,
         };
-        console.log(createPostData);
+        axios
+          .post(
+            `${baseURL}/createpost`,
+            {
+              ...createPostData,
+              ...JSON.parse(localStorage.getItem("authorData") || "{}"),
+            },
+            {
+              headers: {
+                ...JSON.parse(localStorage.getItem("authorData")),
+              },
+            }
+          )
+          .then((res) => {
+            setStatus((prev) => false);
+            return Swal.fire({
+              title: "Success",
+              text: "Post created successfully!",
+              icon: "success",
+            });
+          });
       })
       .catch((error) =>
         Swal.fire({

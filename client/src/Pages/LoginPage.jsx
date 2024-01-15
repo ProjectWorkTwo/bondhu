@@ -30,10 +30,6 @@ const LoginPage = () => {
     console.log(formData);
 
     axios
-      // .post(`${baseURL}/userVarify`, {
-      // .post(`${baseURL}/getuser`, {
-      //   ...formData,
-      // })
       .get(`${baseURL}/getuser`, {
         headers: {
           ...formData,

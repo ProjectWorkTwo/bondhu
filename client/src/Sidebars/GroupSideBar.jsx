@@ -4,11 +4,23 @@ import hidePopUp from "../Components/CustomFunction/hidePopUp";
 import SideBarAccordion from "../Components/Simple/SideBarAccordion";
 import { GroupSideBarContext } from "../Providers/GroupSideBarProvider";
 import { CreateGroupPageFormContext } from "../Providers/CreateGroupPageFormProvider";
+import {
+  useGetGroupManagedByMe,
+  useGetGroupJoined,
+} from "../customHooks/useGetGroupListOwn";
 
 const GroupSideBar = () => {
   const { setCreateGroupPageFormState } = useContext(
     CreateGroupPageFormContext
   );
+  const {
+    dataGroupManagedByMe,
+    isLoadingGroupManagedByMe,
+    refetchGroupManagedByMe,
+  } = useGetGroupManagedByMe();
+  const { dataGroupJoined, isLoadingGroupJoined, refetchGroupJoined } =
+    useGetGroupJoined();
+
   const { showHideGroupSideBarState, setShowHideGroupSideBarState } =
     useContext(GroupSideBarContext);
   const boxRef = useRef(null);
@@ -33,8 +45,20 @@ const GroupSideBar = () => {
         </button>
         <ScrollBar>
           <div className="w-full flex flex-col gap-5">
-            <SideBarAccordion title="Group you manage" />
-            <SideBarAccordion title="Your are joined in" />
+            {isLoadingGroupManagedByMe || (
+              <SideBarAccordion
+                title="Group you manage"
+                data={dataGroupManagedByMe}
+                type="group"
+              />
+            )}
+            {isLoadingGroupJoined || (
+              <SideBarAccordion
+                title="Your are joined in"
+                data={dataGroupJoined}
+                type="group"
+              />
+            )}
           </div>
         </ScrollBar>
       </div>

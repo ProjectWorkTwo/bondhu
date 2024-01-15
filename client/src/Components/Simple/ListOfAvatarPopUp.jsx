@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Avatar1 from "./Avatar1";
 import hidePopUp from "../CustomFunction/hidePopUp";
 
-const ListOfAvatarPopUp = ({ title, setStatus }) => {
+const ListOfAvatarPopUp = ({ title, setStatus, data }) => {
   const boxRef = useRef(null);
   return (
     <section
@@ -15,27 +15,11 @@ const ListOfAvatarPopUp = ({ title, setStatus }) => {
       >
         <h2 className="text-center capitalize">{title}</h2>
         <ul className="w-full flex flex-col gap-4 overflow-auto px-2">
-          <li>
-            <Avatar1 />
-          </li>
-          <li>
-            <Avatar1 />
-          </li>
-          <li>
-            <Avatar1 />
-          </li>
-          <li>
-            <Avatar1 />
-          </li>
-          <li>
-            <Avatar1 />
-          </li>
-          <li>
-            <Avatar1 />
-          </li>
-          <li>
-            <Avatar1 />
-          </li>
+          {data?.map((item) => (
+            <li>
+              <Avatar1 />
+            </li>
+          ))}
         </ul>
       </div>
     </section>

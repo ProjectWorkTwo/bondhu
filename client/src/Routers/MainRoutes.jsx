@@ -25,7 +25,7 @@ const MainRoutes = () => {
           element: <GroupPage />,
         },
         {
-          path: "/group/:name",
+          path: "/group/:groupName",
           element: <SingleGroup />,
         },
         {
@@ -33,7 +33,7 @@ const MainRoutes = () => {
           element: <PagePage />,
         },
         {
-          path: "/page/:name",
+          path: "/page/:pageName",
           element: <SinglePage />,
         },
         {

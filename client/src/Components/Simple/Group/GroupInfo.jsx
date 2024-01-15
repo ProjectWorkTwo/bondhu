@@ -1,13 +1,27 @@
 import React, { useState } from "react";
 import ListOfAvatarPopUp from "../ListOfAvatarPopUp";
 import ProfileInfoContainer from "./ProfileInfoContainer";
+import {
+  useGetGroupInfo,
+  useGetGroupMembers,
+} from "../../../customHooks/useGetGroupData";
 
-const GroupInfo = () => {
+const GroupInfo = ({ groupName }) => {
+  const { dataGroupInfo, isLoadingGroupInfo, refetchGroupInfo } =
+    useGetGroupInfo(groupName);
+  const { dataGroupMembers, isLoadingGroupMembers, refetchGroupMembers } =
+    useGetGroupMembers(groupName);
   const [memberListStatus, setMemberListStatus] = useState(false);
+
+  if (isLoadingGroupInfo || isLoadingGroupMembers) return "Loading";
+
+  const { bio, groupCover } = dataGroupInfo;
   return (
     <ProfileInfoContainer>
       <div className="w-full p-4 flex flex-col justify-center items-center gap-3">
-        <h1 className="text-center capitalize">Group Name</h1>
+        <h1 className="text-center capitalize">
+          {groupName.split("-").join(" ")}
+        </h1>
         <span
           className="btnFill1 w-auto"
           onClick={() => setMemberListStatus((prev) => !prev)}
@@ -15,8 +29,7 @@ const GroupInfo = () => {
           4.5k Members
         </span>
         <p className="text-center text-grayColor text-sm leading-normal">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus
-          ipsum quis ligula vulputate, at auctor orci ullamcorper.
+          {bio}
         </p>
         <button className="btnFill1 w-auto min-w-[200px]">Join</button>
       </div>
@@ -24,6 +37,7 @@ const GroupInfo = () => {
         <ListOfAvatarPopUp
           title="Group Members"
           setStatus={setMemberListStatus}
+          data={dataGroupMembers}
         />
       )}
     </ProfileInfoContainer>

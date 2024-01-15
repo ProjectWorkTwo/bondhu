@@ -12,10 +12,12 @@ const Avatar1 = ({
   separateCompo = true,
   showCTA = false,
   userName = "", // if it is a page then user will mean's the page name
-  profilePic = "",
+  profilePic = userImg,
   date = "",
   children,
   pagePost = false,
+  groupPost = false,
+  profileOrPageName = "",
 }) => {
   const { setOwnProfileState, setOtherProfileState } =
     useContext(ProfilePopUpContext);
@@ -29,14 +31,14 @@ const Avatar1 = ({
         separateCompo && "shadow-xl border"
       }  bg-whiteColor flex justify-start items-center gap-3`}
     >
-      {pagePost ? (
+      {profileOrPageName ? (
         <Link
-          to={getURLFromName("page", userName)}
+          to={getURLFromName(pagePost ? "page" : "group", profileOrPageName)}
           className={`flex-grow-0 flex-shrink-0 ${
             avatarSize || "size-14"
           } rounded-full overflow-hidden border-2 border-primaryColor cursor-pointer`}
         >
-          <img src={userImg} alt="" className="size-full object-cover" />
+          <img src={profilePic} alt="" className="size-full object-cover" />
         </Link>
       ) : (
         <div
@@ -45,18 +47,21 @@ const Avatar1 = ({
           } rounded-full overflow-hidden border-2 border-primaryColor cursor-pointer`}
           onClick={handleShowHideProfile}
         >
-          <img src={userImg} alt="" className="size-full object-cover" />
+          <img src={profilePic} alt="" className="size-full object-cover" />
         </div>
       )}
       <div className="w-full flex flex-col gap-2">
         <div className="w-full flex flex-row justify-between items-center gap-2">
           <div className="flex flex-col">
-            {pagePost ? (
+            {profileOrPageName ? (
               <Link
-                to={getURLFromName("page", "Full Name")}
+                to={getURLFromName(
+                  pagePost ? "page" : "group",
+                  profileOrPageName
+                )}
                 className="hover:underline text-primaryColor font-bold capitalize text-lg cursor-pointer"
               >
-                Full Name
+                {profileOrPageName}
               </Link>
             ) : (
               <h4
@@ -75,7 +80,10 @@ const Avatar1 = ({
               </p>
             )}
             {date && (
-              <Link to={`/post/3`} className="underline text-sm text-secondaryColor select-none cursor-pointer">
+              <Link
+                to={`/post/3`}
+                className="underline text-sm text-secondaryColor select-none cursor-pointer"
+              >
                 {date}
               </Link>
             )}

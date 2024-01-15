@@ -3,7 +3,9 @@ import hidePopUp from "../CustomFunction/hidePopUp";
 import { CreateGroupPageFormContext } from "../../Providers/CreateGroupPageFormProvider";
 import { FaInfoCircle } from "react-icons/fa";
 import ScrollBar from "./ScrollBar";
-import { toCapitalize } from "../../Constant/Constant";
+import { baseURL, toCapitalize } from "../../Constant/Constant";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const CreateGroupPageForm = () => {
   const { createGroupPageFormState, setCreateGroupPageFormState } = useContext(
@@ -24,13 +26,53 @@ const CreateGroupPageForm = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    for (let key in formData) if (!formData[key]) return;
+
+    if (formData[`${createGroupPageFormState.toLowerCase()}Name`].includes("-"))
+      return;
+
+    formData[`${createGroupPageFormState.toLowerCase()}Name`] = formData[
+      `${createGroupPageFormState.toLowerCase()}Name`
+    ]
+      ?.split(" ")
+      .join("-");
+
     console.log(formData);
+    axios
+      .post(
+        `${baseURL}/creategroup`,
+        {
+          ...formData,
+          ...JSON.parse(localStorage.getItem("authorData")),
+        },
+        {
+          headers: JSON.parse(localStorage.getItem("authorData") || "{}"),
+        }
+      )
+      .then((res) => {
+        const data = res.data;
+        if (data?.error)
+          return Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: data?.error,
+          });
+
+        setCreateGroupPageFormState((prev) => "");
+        return Swal.fire({
+          title: "Success",
+          text: "Post created successfully!",
+          icon: "success",
+        });
+      });
     createForm.current.reset();
   };
 
   const warnings = [
     `${toCapitalize(createGroupPageFormState)} Name must be unique`,
-    `Name can contain anything`,
+    `Name can't contains '-'`,
+    `Name can contains anything else`,
     `Your ${toCapitalize(createGroupPageFormState)} name will use as your url`,
   ];
   return (
