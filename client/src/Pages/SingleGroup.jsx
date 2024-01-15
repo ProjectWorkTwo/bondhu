@@ -12,6 +12,8 @@ const SingleGroup = () => {
   const { groupName } = useParams();
   const { dataGroupPosts, isLoadingGroupPosts, refetchGroupPosts } =
     useGetGroupPost(groupName);
+
+  console.log(dataGroupPosts);
   return (
     <section className="w-[95%] max-w-6xl flex flex-col">
       <GroupSideBarComplete />
@@ -20,8 +22,8 @@ const SingleGroup = () => {
       <section className="flex flex-col gap-5 py-5 w-full max-w-xl mx-auto">
         <CreatePost privacy={false} />
         <Posts>
-          {dataGroupPosts?.map((item) => (
-            <Post />
+          {dataGroupPosts?.map(({ _id }) => (
+            <Post key={_id} id={_id} />
           ))}
         </Posts>
       </section>
