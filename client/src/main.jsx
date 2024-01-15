@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CreateGroupPageFormProvider from "./Providers/CreateGroupPageFormProvider.jsx";
 import AuthProvider from "./Providers/AuthProvider.jsx";
 import UnAuthorizeProvider from "./Providers/UnAuthorizeProvider.jsx";
+import UpdateGroupPageFormProvider from "./Providers/UpdateGroupPageFormProvider.jsx";
 
 const queryClient = new QueryClient();
 
@@ -20,15 +21,17 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <AuthProvider>
         <UnAuthorizeProvider>
           <CreateGroupPageFormProvider>
-            <ProfilePopUpProvider>
-              <GroupSideBarProvider>
-                <PageSideBarProvider>
-                  <MainRoutes>
-                    <App />
-                  </MainRoutes>
-                </PageSideBarProvider>
-              </GroupSideBarProvider>
-            </ProfilePopUpProvider>
+            <UpdateGroupPageFormProvider>
+              <ProfilePopUpProvider>
+                <GroupSideBarProvider>
+                  <PageSideBarProvider>
+                    <MainRoutes>
+                      <App />
+                    </MainRoutes>
+                  </PageSideBarProvider>
+                </GroupSideBarProvider>
+              </ProfilePopUpProvider>
+            </UpdateGroupPageFormProvider>
           </CreateGroupPageFormProvider>
         </UnAuthorizeProvider>
       </AuthProvider>

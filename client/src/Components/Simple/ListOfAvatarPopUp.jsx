@@ -15,8 +15,8 @@ const ListOfAvatarPopUp = ({ title, setStatus, data }) => {
       >
         <h2 className="text-center capitalize">{title}</h2>
         <ul className="w-full flex flex-col gap-4 overflow-auto px-2">
-          {data?.map((item) => (
-            <li>
+          {data?.map((item, i) => (
+            <li key={i}>
               <Avatar1 />
             </li>
           ))}
