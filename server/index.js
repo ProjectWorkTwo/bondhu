@@ -385,7 +385,8 @@ async function run() {
      **/
     app.get("/getgroupadmin/:groupName", findUser, async (req, res) => {
       const result = await groupMemberCollection.findOne({groupName: req.params.groupName, status: "admin"});
-      return res.send(result);
+      const adminData = await userCollection.findOne({email: result.email});
+      return res.send(adminData);
     });
 
     app.post("/addgroupmember", findUser, async (req, res) => {
