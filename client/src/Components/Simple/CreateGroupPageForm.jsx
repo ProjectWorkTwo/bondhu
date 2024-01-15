@@ -37,8 +37,6 @@ const CreateGroupPageForm = () => {
     ]
       ?.split(" ")
       .join("-");
-
-    console.log(formData);
     axios
       .post(
         `${baseURL}/creategroup`,

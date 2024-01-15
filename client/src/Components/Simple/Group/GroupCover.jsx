@@ -1,18 +1,16 @@
 import React, { useContext, useRef } from "react";
-import { baseURL, bgDefault, imgbbBaseURL } from "../../../Constant/Constant";
+import { baseURL, imgbbBaseURL } from "../../../Constant/Constant";
 import { FaCamera } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { ProfilePopUpContext } from "../../../Providers/ProfilePopUpProvider";
 import { useGetGroupInfo } from "../../../customHooks/useGetGroupData";
-import GroupInfo from "./GroupInfo";
 
 const coverImg = `https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`;
 
 const GroupCover = () => {
   const { groupName } = useParams();
-  console.log(groupName);
   const { dataGroupInfo, isLoadingGroupInfo, refetchGroupInfo } =
     useGetGroupInfo(groupName);
 
@@ -21,7 +19,6 @@ const GroupCover = () => {
     useContext(ProfilePopUpContext);
 
   if (isLoadingGroupInfo) return "loading...";
-  console.log(dataGroupInfo);
 
   const handleShowHideProfile = () => {
     // setOwnProfileState((prv) => true);
@@ -29,7 +26,6 @@ const GroupCover = () => {
   };
 
   const handleCoverImgChange = () => {
-    console.log(`${baseURL}/updategroup/${groupName}`);
     axios
       .post(
         `${imgbbBaseURL}?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
@@ -41,7 +37,6 @@ const GroupCover = () => {
         }
       )
       .then((res) => {
-        console.log(res?.data?.data?.url);
         axios
           .put(
             `${baseURL}/updategroup/${groupName}`,
@@ -55,7 +50,6 @@ const GroupCover = () => {
             }
           )
           .then((res) => {
-            console.log(res);
             refetchGroupInfo();
             return Swal.fire({
               title: "Success",
@@ -100,12 +94,13 @@ const GroupCover = () => {
           </label>
         </form>
       </div>
-      <div
-        className="w-full min-h-[400px]"
-        style={{
-          ...bgDefault(dataGroupInfo?.groupCover || coverImg),
-        }}
-      ></div>
+      <div className={`w-full h-[450px] overflow-hidden`}>
+        <img
+          src={dataGroupInfo?.groupCover || coverImg}
+          alt=""
+          className="w-full h-full object-cover"
+        />
+      </div>
     </section>
   );
 };

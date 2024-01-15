@@ -58,7 +58,7 @@ const ProfileContent = () => {
       <div className="w-[90%] mx-auto flex flex-col gap-5 py-5">
         {currentActiveTab === "posts" && (
           <>
-            <CreatePost />
+            {/* <CreatePost /> */}
             <Posts>
               <Post />
               <Post />

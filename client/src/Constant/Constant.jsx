@@ -31,9 +31,9 @@ export const currentDate = () => {
 
 export const bgDefault = (coverImg) => ({
   background: `url('${coverImg}')`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover !important",
+  backgroundPosition: "center !important",
+  backgroundRepeat: "no-repeat !important",
 });
 
 export const toCapitalize = (str) => {

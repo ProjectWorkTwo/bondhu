@@ -4,8 +4,10 @@ import hidePopUp from "../CustomFunction/hidePopUp";
 import { baseURL, imgbbBaseURL } from "../../Constant/Constant";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const CreatePostPopUp = ({ setStatus, privacy = true }) => {
+  const { groupName, pageName } = useParams();
   const postImgRef = useRef(null);
   const [postData, setPostData] = useState({
     heading: "",
@@ -51,11 +53,25 @@ const CreatePostPopUp = ({ setStatus, privacy = true }) => {
           ...postData,
           postImg: res?.data?.data?.url,
         };
+
+        let url = ``;
+        let extraData = {};
+        if (groupName) {
+          url = `${baseURL}/creategrouppost`;
+          extraData = { groupName };
+        } else if (pageName) {
+          url = `${baseURL}/createpagepost`;
+          extraData = { pageName };
+        } else {
+          url = `${baseURL}/createpost`;
+        }
+        
         axios
           .post(
-            `${baseURL}/createpost`,
+            url,
             {
               ...createPostData,
+              ...extraData,
               ...JSON.parse(localStorage.getItem("authorData") || "{}"),
             },
             {
